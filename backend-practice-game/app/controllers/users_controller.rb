@@ -9,6 +9,12 @@ class UsersController < ApplicationController
             render json: { token: Auth.create_token(user)} 
         else 
             render json: {errors: user.errors.full_messages}, status: 500
+        end
+    end
+
+    def index
+        users = User.all 
+        render json: users
     end
 
     private 

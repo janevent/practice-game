@@ -1,5 +1,5 @@
 let configURL = "http://localhost:3000/"
-let signUpURL = `${configURL}api/v1/users`
+let signUpURL = `${configURL}users/signup`
 
 
 
@@ -18,10 +18,28 @@ function renderOperatorButtons(){
     let tOB = document.getElementById("times-operator-button");
     let dOB = document.getElementById("divide-operator-button");
 
-    pOB.addEventListener("click", function(e){
-        let fN = float(random(0) + 1);
-        let newAdditionQuestion = new Question()
-    })
+   // pOB.addEventListener("click", function(e){
+     //   let fN = float(random(0) + 1);
+        // Math.floor(Math.random() * 100) + 1
+       // let newAdditionQuestion = new Question()
+        //question is random number between 1 and 100 + random number between 1 and 100
+        //renders a question added on to the container HTML
+        //need a question generator class?
+    //});
+
+    //mOB.addEventListener("click", function(e){
+        
+    //});
+
+    //tOB.addEventListener("click", function(e){
+
+    //})
+
+    //dOB.addEventListener("click", function(e){
+
+    //})
+
+
 }
 
 function submitSignUp(){
@@ -58,6 +76,7 @@ function submitSignUp(){
         })
         console.log(userName);
         document.querySelector(".first-view").innerHTML = ""
+        renderOperatorButtons();
     })
     }
 }
@@ -95,4 +114,4 @@ function clickSignUp(){
 
 clickLogIn();
 clickSignUp()
-//submitSignUp();
+submitSignUp();
