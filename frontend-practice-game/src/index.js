@@ -98,13 +98,13 @@ function submitSignUp(){
         //post fetch request
         fetch(signUpURL, configurationObject)
         .then((response) => {
-            //window.localStorage.setItem(response.data.token)
+            
             //debugger
             return response.json()
         })
         .then((myjson) => {
-            //debugger
-            console.log('Success:', myjson)
+            debugger
+            console.log('Success:', JSON.stringify(myjson))
             //where is the user data in myjson?
             //get the data of the user. create new user with the username, id attributes and new game with points, stars, status and id attributes
             //set token with in window.localStorage to  myjson.data.token
@@ -119,6 +119,7 @@ function submitSignUp(){
         document.querySelector(".first-view").innerHTML = ""
         renderOperatorButtons();
         //render log out button 
+        displayLogoutButton();
         
     })
     }
