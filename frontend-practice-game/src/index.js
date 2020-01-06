@@ -47,6 +47,7 @@ function renderOperatorButtons(){
 //put an eventlistener on logout button that will send a delete request
 function displayLogoutButton(){
     let logoutButton = document.getElementById("logout-button");
+    logoutButton.classList.remove("hidden");
     logoutButton.addEventListener("click", function(e){
         logOutObject = {
             method: "DELETE",
@@ -62,7 +63,9 @@ function displayLogoutButton(){
         fetch(logOurURL, logOutObject)
         .then(response => response.json())
         .then(myjson => console.log(myjson))
-        logoutButton.classList.remove("hidden"); 
+        logoutButton.classList.add("hidden");
+        //window.localStorage.removeItem(data.token) 
+        //remove token to signout
     });
     
 }
