@@ -1,5 +1,5 @@
 let configURL = "http://localhost:3000/"
-let signUpURL = `${configURL}users/signup`
+let signUpURL = `${configURL}signup`
 
 
 
@@ -42,6 +42,9 @@ function renderOperatorButtons(){
 
 }
 
+//remove hidden class on logout button.
+//put an eventlistener on logout button
+
 function submitSignUp(){
     let signUpSubmitB = document.getElementById("sign-up-submit");
     //debugger
@@ -58,25 +61,39 @@ function submitSignUp(){
         let configurationObject = {
             method: "POST",
             headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
+                "Content-Type": "application/json"
+                //"Accept": "application/json"
               },
             body: JSON.stringify({
-                name: userName,
+                username: userName,
                 password: userPassword
               })
         }
         //post fetch request
         fetch(signUpURL, configurationObject)
-        .then(function(response){
+        .then((response) => {
+            //window.localStorage.setItem(response.data.token)
+            //debugger
             return response.json
         })
-        .then(function(json){
-            console.log(json)
+        .then((myjson) => {
+            //debugger
+            console.log('Success:', myjson)
+            //where is the user data in myjson?
+            //get the data of the user. create new user with the username, id attributes and new game with points, stars, status and id attributes
+            //set token with in window.localStorage to  myjson.data.token
+            //window.localStorage.setItem(myjson.data.token)
+            //render game info on right panel
+            //render username
         })
+        .catch(error => console.error('Error:', error))
+
+
         console.log(userName);
         document.querySelector(".first-view").innerHTML = ""
         renderOperatorButtons();
+        //render log out button 
+        
     })
     }
 }
@@ -109,6 +126,9 @@ function clickSignUp(){
     })
 
 }
+
+//window.localStorage.setItem('token')
+//passed through header authorization: token
 
 
 

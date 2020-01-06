@@ -1,12 +1,15 @@
-require 'Auth'
+require './lib/auth.rb'
 
 class UsersController < ApplicationController
     def signup 
         #params.inspect
-        user = User.new(user_params)
+        #binding.pry
+        user = User.new(username: params[:username], password: params[:password])
         if user.save
-            #render json: user
-            render json: { token: Auth.create_token(user)} 
+            game = user.games.build(points: 0, stars: 0, complete: false)
+            #binding.pry
+            render json: user
+            #render json: { token: Auth.create_token(user)} 
         else 
             render json: {errors: user.errors.full_messages}, status: 500
         end
@@ -18,7 +21,7 @@ class UsersController < ApplicationController
     end
 
     private 
-    def user_params    
-        params.require(:user).permit(:username, :password)
-    end
+   # def user_params    
+    #    params.require(:user).permit(:username, :password)
+    #end
 end
