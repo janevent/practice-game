@@ -1,5 +1,6 @@
 let configURL = "http://localhost:3000/"
 let signUpURL = `${configURL}signup`
+let logOutURL = `${configURL}logout`
 
 
 
@@ -43,7 +44,28 @@ function renderOperatorButtons(){
 }
 
 //remove hidden class on logout button.
-//put an eventlistener on logout button
+//put an eventlistener on logout button that will send a delete request
+function displayLogoutButton(){
+    let logoutButton = document.getElementById("logout-button");
+    logoutButton.addEventListener("click", function(e){
+        logOutObject = {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json"
+            
+            },
+            body: JSON.stringify({
+                user_id: currentUser.id,
+                username: currentUser.username
+            })
+        }
+        fetch(logOurURL, logOutObject)
+        .then(response => response.json())
+        .then(myjson => console.log(mjson))
+        logoutButton.classList.remove("hidden"); 
+    });
+    
+}
 
 function submitSignUp(){
     let signUpSubmitB = document.getElementById("sign-up-submit");
@@ -74,7 +96,7 @@ function submitSignUp(){
         .then((response) => {
             //window.localStorage.setItem(response.data.token)
             //debugger
-            return response.json
+            return response.json()
         })
         .then((myjson) => {
             //debugger
