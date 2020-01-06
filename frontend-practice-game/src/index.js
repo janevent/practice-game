@@ -56,8 +56,8 @@ function displayLogoutButton(){
             
             },
             body: JSON.stringify({
-                user_id: currentUser.id,
-                username: currentUser.username
+                user_id: user.id,
+                username: user.username
             })
         }
         fetch(logOurURL, logOutObject)
@@ -83,6 +83,7 @@ function submitSignUp(){
         //debugger
         let passwordInput = document.getElementById("sign-up-password");
         let userPassword = passwordInput.value;
+        let user = new User(userName, userPassword)
         let configurationObject = {
             method: "POST",
             headers: {
@@ -90,8 +91,8 @@ function submitSignUp(){
                 //"Accept": "application/json"
               },
             body: JSON.stringify({
-                username: userName,
-                password: userPassword
+                username: user.username,
+                password: user.password
               })
         }
         //post fetch request
