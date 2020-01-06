@@ -61,7 +61,7 @@ function displayLogoutButton(){
         }
         fetch(logOurURL, logOutObject)
         .then(response => response.json())
-        .then(myjson => console.log(mjson))
+        .then(myjson => console.log(myjson))
         logoutButton.classList.remove("hidden"); 
     });
     
