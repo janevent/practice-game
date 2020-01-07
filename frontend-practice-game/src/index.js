@@ -83,7 +83,7 @@ function submitSignUp(){
         //debugger
         let passwordInput = document.getElementById("sign-up-password");
         let userPassword = passwordInput.value;
-        let user = new User(userName, userPassword)
+        //let user = new User(userName, userPassword)
         let configurationObject = {
             method: "POST",
             headers: {
@@ -91,8 +91,8 @@ function submitSignUp(){
                 //"Accept": "application/json"
               },
             body: JSON.stringify({
-                username: user.username,
-                password: user.password
+                username: userName,
+                password: userPassword
               })
         }
         //post fetch request
@@ -107,8 +107,10 @@ function submitSignUp(){
             debugger
             console.log('Success:', JSON.stringify(myjson))
             window.localStorage.setItem('userToken', myjson.token)
+            let user = new User(myjson.user.username, myjson.user.id)
+            let incompleteGame = new Game(myjson.incomplete_game.id, myjson.incomplete_game.points, myjson.incomplete_game.stars, myjson.incomplete_game.complete, myjson.incomplete_game.user_id)
 
-            //where is the user data in myjson?
+            
             //get the data of the user. create new user with the username, id attributes and new game with points, stars, status and id attributes
             //set token with in window.localStorage to  myjson.data.token
             //window.localStorage.setItem(myjson.data.token)
