@@ -100,6 +100,7 @@ function submitSignUp(){
         .then((response) => {
             
             //debugger
+            console.log('Response:', response)
             return response.json()
         })
         .then((myjson) => {
@@ -113,6 +114,9 @@ function submitSignUp(){
             //render username
         })
         .catch(error => console.error('Error:', error))
+
+        //user.id, user.username, incomplete_game.points, incomplete_games.stars, incomplete_game.id, incomplete_game.complete, incomplete_game.user_id
+        //token
 
 
         console.log(userName);

@@ -9,9 +9,9 @@ class UsersController < ApplicationController
             game = user.games.build(points: 0, stars: 0, complete: false)
             #binding.pry
             game.save
-            binding.pry
+            #binding.pry
             #render json: user
-            render json: { user: user, token: Auth.create_token(user)} 
+            render json: { user: {id: user.id, username: user.username }, incomplete_game: game, token: Auth.create_token(user)} 
         else 
             render json: {errors: user.errors.full_messages}, status: 500
         end
