@@ -106,6 +106,8 @@ function submitSignUp(){
         .then((myjson) => {
             debugger
             console.log('Success:', JSON.stringify(myjson))
+            window.localStorage.setItem('userToken', myjson.token)
+
             //where is the user data in myjson?
             //get the data of the user. create new user with the username, id attributes and new game with points, stars, status and id attributes
             //set token with in window.localStorage to  myjson.data.token
