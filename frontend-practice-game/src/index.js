@@ -2,7 +2,15 @@ let configURL = "http://localhost:3000/"
 let signUpURL = `${configURL}signup`
 let logOutURL = `${configURL}logout`
 
-
+function displayWhoIsPlaying(user){
+    //select div element with id="who-is-playing" and add text with username and remove hidden class
+    let wIPDiv = document.getElementById("who-is-playing");
+    wIPDiv.innerHTML = `
+        <h2> ${user.username} is Playing </h2>
+        `
+    //wIPDiv.removeAttribute(".who-is-playing")   
+    wIPDiv.classList.remove("hidden")
+}
 
 function renderOperatorButtons(){
     let container = document.querySelector(".first-view");
@@ -104,13 +112,16 @@ function submitSignUp(){
             return response.json()
         })
         .then((myjson) => {
-            debugger
+            
             console.log('Success:', JSON.stringify(myjson))
             window.localStorage.setItem('userToken', myjson.token)
             let user = new User(myjson.user.username, myjson.user.id)
             let incompleteGame = new Game(myjson.incomplete_game.id, myjson.incomplete_game.points, myjson.incomplete_game.stars, myjson.incomplete_game.complete, myjson.incomplete_game.user_id)
 
-            
+            //debugger
+
+            displayWhoIsPlaying(user);
+
             //get the data of the user. create new user with the username, id attributes and new game with points, stars, status and id attributes
             //set token with in window.localStorage to  myjson.data.token
             //window.localStorage.setItem(myjson.data.token)
