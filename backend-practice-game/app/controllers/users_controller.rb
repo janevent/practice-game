@@ -11,7 +11,12 @@ class UsersController < ApplicationController
             game.save
             #binding.pry
             #render json: user
-            render json: { user: {id: user.id, username: user.username }, incomplete_game: game, token: Auth.create_token(user)} 
+            options = {
+                include: [:games]
+            }
+
+            render json: UserSerializer.new(user, options)
+            #render json: { user: {id: user.id, username: user.username }, #incomplete_game: game, token: Auth.create_token({username: #user.username, id: user.id})} 
         else 
             render json: {errors: user.errors.full_messages}, status: 500
         end
@@ -19,7 +24,11 @@ class UsersController < ApplicationController
 
     def index
         users = User.all 
-        render json: users
+        #does games need to be in an array?
+        options = {
+            include: [:games]
+        }
+        render json: User.serializer(users, options)
     end
 
     private 

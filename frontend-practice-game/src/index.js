@@ -1,6 +1,7 @@
 let configURL = "http://localhost:3000/"
 let signUpURL = `${configURL}signup`
 let logOutURL = `${configURL}logout`
+let usersURL = `${configURL}users`
 
 let container = document.querySelector(".first-view");
 
