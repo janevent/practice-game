@@ -2,25 +2,29 @@ let configURL = "http://localhost:3000/"
 let signUpURL = `${configURL}signup`
 let logOutURL = `${configURL}logout`
 
+let container = document.querySelector(".first-view");
+
 function displayWhoIsPlaying(user){
     //select div element with id="who-is-playing" and add text with username and remove hidden class
-    let wIPDiv = document.getElementById("who-is-playing");
-    wIPDiv.innerHTML = `
-        <h2> ${user.username} is Playing </h2>
-        `
+    let wIPDiv = document.createElement("h2");
+    wIPDiv.innerHTML = ` ${user.username} is Playing`
+    container.append(wIPDiv)
+    //wIPDiv.innerHTML = `
+      //  <h2> ${user.username} is Playing </h2>
+        //`
     //wIPDiv.removeAttribute(".who-is-playing")   
-    wIPDiv.classList.remove("hidden")
+    //wIPDiv.classList.remove("hidden")
 }
 
 function renderOperatorButtons(){
-    let container = document.querySelector(".first-view");
-    container.innerHTML = "";
-    container.innerHTML = `
+   // let container = document.querySelector(".first-view");
+    //container.innerHTML = "";
+    container.innerHTML =  `
         <button type="button" id="plus-operator-button">+</button>
         <button type="button" id="minus-operator-button">-</button>
         <button type="button" id="times-operator-button">*</button>
         <button type="button" id="divide-operator-button">/</button>
-    `
+    `;
 
     let pOB = document.getElementById("plus-operator-button");
     let mOB = document.getElementById("minus-operator-button");
@@ -53,6 +57,7 @@ function renderOperatorButtons(){
 
 //remove hidden class on logout button.
 //put an eventlistener on logout button that will send a delete request
+//how do I keep track of current user? and submit userToken with fetch?
 function displayLogoutButton(){
     let logoutButton = document.getElementById("logout-button");
     logoutButton.classList.remove("hidden");
@@ -74,8 +79,15 @@ function displayLogoutButton(){
         logoutButton.classList.add("hidden");
         //window.localStorage.removeItem(data.token) 
         //remove token to signout
-    });
-    
+    });   
+}
+
+function displayUsersGames(){
+    let userToken = window.localStorage.getItem('userToken');
+    fetch(usersURL, usersObject)
+    .then(function(response){ return response.json()})
+    .then(function(myjson){ console.log(myjson)})
+    .catch((error) => console.error("Error:", error))
 }
 
 function submitSignUp(){
@@ -119,26 +131,32 @@ function submitSignUp(){
             let incompleteGame = new Game(myjson.incomplete_game.id, myjson.incomplete_game.points, myjson.incomplete_game.stars, myjson.incomplete_game.complete, myjson.incomplete_game.user_id)
 
             //debugger
-
+            //document.querySelector(".first-view").innerHTML = "";
             displayWhoIsPlaying(user);
+            //renderOperatorButtons();
 
             //get the data of the user. create new user with the username, id attributes and new game with points, stars, status and id attributes
             //set token with in window.localStorage to  myjson.data.token
             //window.localStorage.setItem(myjson.data.token)
             //render game info on right panel
             //render username
+            console.log("user:", user)
         })
         .catch(error => console.error('Error:', error))
 
         //user.id, user.username, incomplete_game.points, incomplete_games.stars, incomplete_game.id, incomplete_game.complete, incomplete_game.user_id
         //token
 
+        //console.log("user:", user)
 
-        console.log(userName);
-        document.querySelector(".first-view").innerHTML = ""
+
+        //console.log(userName);
+        //document.querySelector(".first-view").innerHTML = ""
         renderOperatorButtons();
         //render log out button 
         displayLogoutButton();
+
+        displayUsersGames();
         
     })
     }
