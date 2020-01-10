@@ -12,10 +12,10 @@ class UsersController < ApplicationController
             #binding.pry
             #render json: user
             options = {
-                include: [:games]
+                include: [:games.incomplete_game]
             }
 
-            render json: UserSerializer.new(user, options)
+            render json: { user: UserSerializer.new(user, options), token: Auth.create_token({username: user.username, id: user.id}) }
             #render json: { user: {id: user.id, username: user.username }, #incomplete_game: game, token: Auth.create_token({username: #user.username, id: user.id})} 
         else 
             render json: {errors: user.errors.full_messages}, status: 500
@@ -28,7 +28,7 @@ class UsersController < ApplicationController
         options = {
             include: [:games]
         }
-        render json: User.serializer(users, options)
+        render json: UserSerializer.new(users, options)
     end
 
     private 

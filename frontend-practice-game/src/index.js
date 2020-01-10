@@ -83,9 +83,11 @@ function displayLogoutButton(){
     });   
 }
 
+
+
 function displayUsersGames(){
     let userToken = window.localStorage.getItem('userToken');
-    fetch(usersURL, usersObject)
+    fetch(usersURL)
     .then(function(response){ return response.json()})
     .then(function(myjson){ console.log(myjson)})
     .catch((error) => console.error("Error:", error))
@@ -128,8 +130,9 @@ function submitSignUp(){
             
             console.log('Success:', JSON.stringify(myjson))
             window.localStorage.setItem('userToken', myjson.token)
-            let user = new User(myjson.user.username, myjson.user.id)
-            let incompleteGame = new Game(myjson.incomplete_game.id, myjson.incomplete_game.points, myjson.incomplete_game.stars, myjson.incomplete_game.complete, myjson.incomplete_game.user_id)
+            let user = new User(myjson.user.data.attributes.username, myjson.user.data.attributes.id)
+            debugger
+            let incompleteGame = new Game(myjson.user.included[0].attributes.id, myjson.user.included[0].attributes.points, myjson.user.included[0].attributes.stars, myjson.user.included[0].attributes.complete, myjson.user.included[0].attributes.user_id)
 
             //debugger
             //document.querySelector(".first-view").innerHTML = "";
