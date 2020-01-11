@@ -130,9 +130,13 @@ function submitSignUp(){
             
             console.log('Success:', JSON.stringify(myjson))
             window.localStorage.setItem('userToken', myjson.token)
+            
             let user = new User(myjson.user.data.attributes.username, myjson.user.data.attributes.id)
-            debugger
+            //debugger
             let incompleteGame = new Game(myjson.user.included[0].attributes.id, myjson.user.included[0].attributes.points, myjson.user.included[0].attributes.stars, myjson.user.included[0].attributes.complete, myjson.user.included[0].attributes.user_id)
+            //debugger
+            window.localStorage.setItem('currentGame', JSON.stringify(incompleteGame));
+            window.localStorage.setItem('currentUser', JSON.stringify(user))
 
             //debugger
             //document.querySelector(".first-view").innerHTML = "";

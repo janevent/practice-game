@@ -12,7 +12,7 @@ class UsersController < ApplicationController
             #binding.pry
             #render json: user
             options = {
-                include: [:games.incomplete_game]
+                include: [:games]
             }
 
             render json: { user: UserSerializer.new(user, options), token: Auth.create_token({username: user.username, id: user.id}) }
