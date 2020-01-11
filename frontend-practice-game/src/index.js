@@ -2,6 +2,7 @@ let configURL = "http://localhost:3000/"
 let signUpURL = `${configURL}signup`
 let logOutURL = `${configURL}logout`
 let usersURL = `${configURL}users`
+let updateGameURL = `${configURL}game`
 
 let container = document.querySelector(".first-view");
 
@@ -44,10 +45,23 @@ function renderOperatorButtons(){
             let answer = document.getElementById("user-answer").value;
             let check = additionQuestion.checkAnswer(answer);
             if(!!check){
+                // render answer green
                 answer.classList.add("green");
                 // render answer green
                 //find currentGame
                 let currentGame = JSON.parse(window.localStorage.currentGame);
+                let id = currentGame.id;
+                let points = currentGame.points;
+                points += 1;
+                //increment points by one
+                let stars = currentGame.stars;
+                stars = Math.floor(points/10);
+                //update stars;
+                let complete = currentGame.complete;
+                if(points== 100){
+                    complete = true;
+                }
+                let userId = currentGame.userId;
                 //let newPoints = points + 1
                 //stars = Math.floor(newPoints/10)
                 //can it be update?
@@ -61,11 +75,15 @@ function renderOperatorButtons(){
                         id: gameId,
                         points: points,
                         stars: stars,
-                        user_id: UserId,
-
+                        complete: complete,
+                        user_id: UserId
                     }
                 }
+                fetch(updateGameURL, updateGameConfig)
+                .then( (response) => response.json() )
+                .then((myJson) => console.log(myJson))
                 //send fetch request and update localStorage.currentGame
+                //update points and stars on right column
             } else {
                 answer.classList.add("red");
                 //render answer red
