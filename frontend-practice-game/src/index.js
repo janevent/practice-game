@@ -39,6 +39,38 @@ function renderOperatorButtons(){
         let operator = " + ";
         let additionQuestion = new Question(num1, operator, num2);
         additionQuestion.renderQues();
+        let checkButton = document.selectElementById("check-answer");
+        checkButton.addEventListener("click", function(e){
+            let answer = document.getElementById("user-answer").value;
+            let check = additionQuestion.checkAnswer(answer);
+            if(!!check){
+                answer.classList.add("green");
+                // render answer green
+                //find currentGame
+                let currentGame = JSON.parse(window.localStorage.currentGame);
+                //let newPoints = points + 1
+                //stars = Math.floor(newPoints/10)
+                //can it be update?
+                let updateGameConfig = {
+                    method: "PATCH",
+                    headers: {
+                        type: "application/json",
+                        user_token: "window.localStorage.userToken"
+                    },
+                    body: {
+                        id: gameId,
+                        points: points,
+                        stars: stars,
+                        user_id: UserId,
+
+                    }
+                }
+                //send fetch request and update localStorage.currentGame
+            } else {
+                answer.classList.add("red");
+                //render answer red
+            }
+        })
 
        // let newAdditionQuestion = new Question()
         //question is random number between 1 and 100 + random number between 1 and 100

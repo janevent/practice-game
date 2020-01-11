@@ -6,11 +6,21 @@ class Question{
         this.thirdNum = thirdNum;
     }
 
+    checkAnswer(answer){
+        if(eval(`${this.firstNum} ${this.operator} = answer`)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     renderQues(){
         //debugger
         document.querySelector(".first-view").innerHTML += `
-        <form id="question-form">${this.firstNum} ${this.operator} ${this.secondNum} = <input type="text" name="answer" id="users-answer><input type="submit" value="submit"></form>
+        <form id="question-form">${this.firstNum} ${this.operator} ${this.secondNum} = <input type="text" name="answer" id="user-answer"><input type="submit" id="check-answer" value="check"></form>
+    
         `
+        //this.checkAnswer();
     }
 
     
