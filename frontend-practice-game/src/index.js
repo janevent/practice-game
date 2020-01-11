@@ -32,22 +32,39 @@ function renderOperatorButtons(){
     let tOB = document.getElementById("times-operator-button");
     let dOB = document.getElementById("divide-operator-button");
 
-   // pOB.addEventListener("click", function(e){
-     //   let fN = float(random(0) + 1);
-        // Math.floor(Math.random() * 100) + 1
+   pOB.addEventListener("click", function(e){
+       //let fN = Math.float(random(0) + 1);
+        let num1 = Math.floor(Math.random() * 100) + 1;
+        let num2 = Math.floor(Math.random() * 100) + 1;
+        let operator = " + ";
+        let additionQuestion = new Question(num1, operator, num2);
+        additionQuestion.renderQues();
+
        // let newAdditionQuestion = new Question()
         //question is random number between 1 and 100 + random number between 1 and 100
         //renders a question added on to the container HTML
         //need a question generator class?
-    //});
+    });
 
-    //mOB.addEventListener("click", function(e){
-        
-    //});
+    mOB.addEventListener("click", function(e){
+        let num1 = Math.floor(Math.random() * 100) + 1;
+        let num2 = Math.floor(Math.random() * 100) + 1;
+        let operator = " - ";
+        let minusQuestion = new Question(num1, operator, num2)
+        minusQuestion.renderQues();
 
-    //tOB.addEventListener("click", function(e){
 
-    //})
+
+    });
+
+    tOB.addEventListener("click", function(e){
+        let num1 = Math.floor(Math.random() * 10) + 1;
+        let num2 = Math.floor(Math.random() * 10) + 1;
+        let operator = " * ";
+        let timesQuestion = new Question(num1, operator, num2);
+        timesQuestion.renderQues();
+
+    })
 
     //dOB.addEventListener("click", function(e){
 
@@ -140,7 +157,7 @@ function submitSignUp(){
 
             //debugger
             //document.querySelector(".first-view").innerHTML = "";
-            displayWhoIsPlaying(user);
+            //displayWhoIsPlaying(user);
             //renderOperatorButtons();
 
             //get the data of the user. create new user with the username, id attributes and new game with points, stars, status and id attributes
