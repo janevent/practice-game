@@ -9,7 +9,9 @@ class GamesController < ApplicationController
     end
 
     def update 
+        
         #token  = headers userToken 
+        token = headers["Authorization"]
         if token && Auth.decode_token(token)
             game = Game.find_by(id: params[:id]);
             game.update(points: params[:points], stars: params[:stars], complete: params[:complete])

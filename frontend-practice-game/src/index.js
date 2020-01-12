@@ -18,6 +18,15 @@ function displayWhoIsPlaying(user){
     //wIPDiv.classList.remove("hidden")
 }
 
+function clickLogOutButton(){
+    let logOutButton = document.getElementById("logout-button");
+    logoutButton.addEventListener("click", function(e){
+        window.localStorage.removeItem(userToken);
+        window.localStorage.removeItem(currentUser);
+        window.localStorage.removeItem()
+    })
+}
+
 function renderOperatorButtons(){
    // let container = document.querySelector(".first-view");
     //container.innerHTML = "";
@@ -65,11 +74,12 @@ function renderOperatorButtons(){
                 //let newPoints = points + 1
                 //stars = Math.floor(newPoints/10)
                 //can it be update?
+                let token = window.localStorage.userToken
                 let updateGameConfig = {
                     method: "PATCH",
                     headers: {
                         type: "application/json",
-                        user_token: "window.localStorage.userToken"
+                        Authorization: `Bearer ${token}` 
                     },
                     body: {
                         id: gameId,
