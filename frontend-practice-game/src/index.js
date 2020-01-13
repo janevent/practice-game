@@ -24,7 +24,7 @@ function clickLogOutButton(){
     logoutButton.addEventListener("click", function(e){
         window.localStorage.removeItem(userToken);
         window.localStorage.removeItem(currentUser);
-        window.localStorage.removeItem()
+        window.localStorage.removeItem(currentGame)
     })
 }
 
@@ -251,6 +251,7 @@ function submitSignUp(){
 function submitLogIn(){
     let logInSubmitB = document.getElementById("log-in-submit");
     logInSubmitB.addEventListener("click", function(e){
+        //debugger
         //pass in e or not
         let nameInput = document.getElementById("log-in-name").value;
         let passwordInput = document.getElementById("log-in-password").value;
@@ -259,13 +260,13 @@ function submitLogIn(){
         let logInObject = {
             method: "POST",
             headers: {
-                type: "application/json"
+                "Content-Type": "application/json"
                 
             },
-            body: {
+            body: JSON.stringify({
                 username: nameInput,
                 password: passwordInput
-            }
+            })
         };
 
         fetch(logInURL, logInObject)
