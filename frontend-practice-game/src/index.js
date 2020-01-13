@@ -1,5 +1,6 @@
 let configURL = "http://localhost:3000/"
 let signUpURL = `${configURL}signup`
+let logInURL = `${configURL}login`
 let logOutURL = `${configURL}logout`
 let usersURL = `${configURL}users`
 let updateGameURL = `${configURL}game`
@@ -247,16 +248,53 @@ function submitSignUp(){
     }
 }
 
+function submitLogIn(){
+    let logInSubmitB = document.getElementById("log-in-submit");
+    logInSubmitB.addEventListener("click", function(e){
+        //pass in e or not
+        let nameInput = document.getElementById("log-in-name").value;
+        let passwordInput = document.getElementById("log-in-password").value;
+
+
+        let logInObject = {
+            method: "POST",
+            headers: {
+                type: "application/json"
+                
+            },
+            body: {
+                username: nameInput,
+                password: passwordInput
+            }
+        };
+
+        fetch(logInURL, logInObject)
+        .then( function(response){ return response.json() 
+        })
+        .then( function(myjson){
+            console.log(myjson)
+            //create new user or find user with username and user id from myjson object
+            user = new User(myjson.data)
+            //create new game or find game with id, points, stars, complete, user_id
+
+        })
+        .catch( function(error){
+            console.error('Error:', error)
+        })
+    })
+ }
+
 function clickLogIn (){
     let logInButton = document.getElementById("log-in-1");
     logInButton.addEventListener("click", function(e){
         console.log(e);
         document.querySelector(".first-view").innerHTML = `<form id="log-in-form">Name:<br>
-        <input type="text" name="name"><br>
+        <input type="text" name="name" id="log-in-name"><br>
         password: <br>
-        <input type="text" name="password"><br>
+        <input type="text" name="password" id="log-in-password"><br>
         <input type="submit" id="log-in-submit" value="Submit">
         </form>`
+        submitLogIn();
     })
 }
 
