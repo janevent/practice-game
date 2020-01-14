@@ -77,10 +77,10 @@ function renderOperatorButtons(){
                 //can it be update?
                 let token = window.localStorage.userToken
                 let updateGameConfig = {
-                    method: "PATCH",
+                    method: "PUT",
                     headers: {
-                        type: "application/json",
-                        Authorization: `Bearer ${token}` 
+                        "Content-type": "application/json",
+                        "Authorization": `Bearer ${token}` 
                     },
                     body: {
                         id: gameId,
@@ -260,7 +260,8 @@ function submitLogIn(){
         let logInObject = {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Accept": "application/json"
                 
             },
             body: JSON.stringify({

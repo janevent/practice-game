@@ -8,6 +8,23 @@ class GamesController < ApplicationController
         end
     end
 
+    def show 
+        #game = Game.find_by(id: params[:id])
+        token = headers["Authorization"]
+        if token && Auth.decode_token(token)
+            game = Game.find_by(id: params[:id])
+            if game 
+                render json: GameSerializer.new(game)
+            else 
+                render json: { errors: {message: "Can not find game"}}
+            end
+        else
+            render json: { errors: {message: "Need a valid token"}}
+            status: 500
+        end
+            
+    end
+
     def update 
         
         #token  = headers userToken 
@@ -15,7 +32,7 @@ class GamesController < ApplicationController
         if token && Auth.decode_token(token)
             game = Game.find_by(id: params[:id]);
             game.update(points: params[:points], stars: params[:stars], complete: params[:complete])
-            render json: Game.serializer(game)
+            render json: GameSerializer.new(game)
         else
             render json: {errors: {message: "Need a valid token"}},
             status: 500
