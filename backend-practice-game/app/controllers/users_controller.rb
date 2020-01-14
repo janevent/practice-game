@@ -25,10 +25,16 @@ class UsersController < ApplicationController
     def index
         users = User.all 
         #does games need to be in an array?
+        #get just the complete games or number of complete games
+        complete_users = [];
+        users.each do |user|
+            complete_games << " #{user.username}:   #{user.games.complete_games.length}" 
+        end
         options = {
             include: [:games]
         }
-        render json: UserSerializer.new(users, options)
+        #render json: UserSerializer.new(users, options)
+        render json: complete_users
     end
 
     private 

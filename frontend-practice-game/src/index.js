@@ -19,6 +19,16 @@ function displayWhoIsPlaying(user){
     //wIPDiv.classList.remove("hidden")
 }
 
+function displayUsers(){
+    fetch(usersURL)
+    .then(function(response){ return response.json()
+    })
+    .then(function(myjson){
+        console.log("Users:", myjson)
+        //iterate over each user and display how many games they have completed
+    })
+}
+
 function clickLogOutButton(){
     let logOutButton = document.getElementById("logout-button");
     logoutButton.addEventListener("click", function(e){
@@ -165,9 +175,27 @@ function displayLogoutButton(){
 
 function displayUsersGames(){
     let userToken = window.localStorage.getItem('userToken');
-    fetch(usersURL)
+    fetch(usersURL, {
+        method: "GET",
+        headers: {
+            "Application Type": "application/json",
+            "Authorization": `Bearer ${userToken}`
+        }
+    })
+    //send with Authorization[:header] = `bearer, ${token}`
     .then(function(response){ return response.json()})
-    .then(function(myjson){ console.log(myjson)})
+    .then(function(myjson){ console.log(myjson)
+        let logoutContainer = document.querySelector(".log-out-container");
+        let ul = document.createElement("ul");
+        logoutContainer.appendChilde(ul);
+        //let values = Object.values(myjson);
+        //for(let v of values){
+            //let li = document.createElement("li");
+            //li.innerHTML = `${v} game/s complete`
+        //}
+    //create ul and append it to log out container
+    //create li element for each user and give it the innerHTML of user: numm games complete
+    })
     .catch((error) => console.error("Error:", error))
 }
 
