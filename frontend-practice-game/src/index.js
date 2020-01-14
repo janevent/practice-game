@@ -268,6 +268,7 @@ function submitLogIn(){
                 password: passwordInput
             })
         };
+        //debugger
 
         fetch(logInURL, logInObject)
         .then( function(response){ return response.json() 
@@ -275,7 +276,7 @@ function submitLogIn(){
         .then( function(myjson){
             console.log(myjson)
             //create new user or find user with username and user id from myjson object
-            user = new User(myjson.data)
+            //user = new User(myjson.data)
             //create new game or find game with id, points, stars, complete, user_id
 
         })
