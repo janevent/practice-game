@@ -151,20 +151,21 @@ function displayLogoutButton(){
     let logoutButton = document.getElementById("logout-button");
     logoutButton.classList.remove("hidden");
     logoutButton.addEventListener("click", function(e){
-        logOutObject = {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json"
+        //logOutObject = {
+          //  method: "DELETE",
+            //headers: {
+              //  "Content-Type": "application/json"
             
-            },
-            body: JSON.stringify({
-                user_id: user.id,
-                username: user.username
-            })
-        }
-        fetch(logOurURL, logOutObject)
-        .then(response => response.json())
-        .then(myjson => console.log(myjson))
+            //},
+            //body: JSON.stringify({
+              //  user_id: user.id,
+                //username: user.username
+            //})
+        //}
+        //fetch(logOurURL, logOutObject)
+        //.then(response => response.json())
+        //.then(myjson => console.log(myjson))
+        localStorage.removeItem(userToken);
         logoutButton.classList.add("hidden");
         //window.localStorage.removeItem(data.token) 
         //remove token to signout
@@ -178,13 +179,14 @@ function displayUsersGames(){
     fetch(usersURL, {
         method: "GET",
         headers: {
-            "Application Type": "application/json",
+            "Content-Type": "application/json",
             "Authorization": `Bearer ${userToken}`
         }
     })
     //send with Authorization[:header] = `bearer, ${token}`
     .then(function(response){ return response.json()})
-    .then(function(myjson){ console.log(myjson)
+    .then(function(myjson){ 
+        console.log("userGames", myjson)
         let logoutContainer = document.querySelector(".log-out-container");
         let ul = document.createElement("ul");
         logoutContainer.appendChilde(ul);
@@ -297,14 +299,28 @@ function submitLogIn(){
                 password: passwordInput
             })
         };
-        //debugger
+        debugger
 
         fetch(logInURL, logInObject)
-        .then( function(response){ return response.json() 
-        })
+        .then( response => response.json())
         .then( function(myjson){
-            console.log(myjson)
+            console.log("Success: ", myjson)
             //create new user or find user with username and user id from myjson object
+            let game = myjson.game.data.attributes;
+            let gameId = game.id;
+            let gameComplete = game.complete;
+            let gamePoints = game.points;
+            let gameStars = game.stars;
+            let gameUserId = game.user_id
+            let ng = new Game(gameId, gamePoints, gameStars, gameComplete, gameUserId);
+            let user = myjson.user.data.attributes;
+            let userId = user.id;
+            let username = user.username;
+            let nu = new User(userId, username)
+            window.localStorage.setItem("userToken", myjson.token)
+            window.localStorage.setItem("currentUser", JSON.stringify(nu));
+            window.localStorage.setItem("currentGame", JSON.stringify(ng));
+
             //user = new User(myjson.data)
             //create new game or find game with id, points, stars, complete, user_id
 
@@ -312,6 +328,9 @@ function submitLogIn(){
         .catch( function(error){
             console.error('Error:', error)
         })
+        renderOperatorButtons();
+        displayLogoutButton();
+        displayUsersGames();
     })
  }
 
