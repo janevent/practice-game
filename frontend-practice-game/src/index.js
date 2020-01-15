@@ -187,7 +187,7 @@ function displayUsersGames(){
     .then(function(response){ return response.json()})
     .then(function(myjson){ 
         console.log("userGames", myjson)
-        let logoutContainer = document.querySelector(".log-out-container");
+        let logoutContainer = document.querySelector(".logout-container");
         let ul = document.createElement("ul");
         logoutContainer.appendChilde(ul);
         //let values = Object.values(myjson);
@@ -299,7 +299,7 @@ function submitLogIn(){
                 password: passwordInput
             })
         };
-        debugger
+        //debugger
 
         fetch(logInURL, logInObject)
         .then( response => response.json())

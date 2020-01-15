@@ -28,7 +28,7 @@ class UsersController < ApplicationController
         #get just the complete games or number of complete games
         complete_users = [];
         users.each do |user|
-            complete_games << " #{user.username}:   #{user.games.complete_games.length}" 
+            complete_users << " #{user.username}:   #{user.games.complete_games.length}" 
         end
         options = {
             include: [:games]
