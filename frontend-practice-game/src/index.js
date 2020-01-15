@@ -42,10 +42,16 @@ function renderOperatorButtons(){
    // let container = document.querySelector(".first-view");
     //container.innerHTML = "";
     container.innerHTML =  `
+        <br>
+        <h4> is Playing!</h4>
+        <br>
         <button type="button" id="plus-operator-button">+</button>
         <button type="button" id="minus-operator-button">-</button>
         <button type="button" id="times-operator-button">*</button>
         <button type="button" id="divide-operator-button">/</button>
+        <br>
+        <br>
+        <br>
     `;
 
     let pOB = document.getElementById("plus-operator-button");
@@ -189,7 +195,7 @@ function displayUsersGames(){
         console.log("userGames", myjson)
         let logoutContainer = document.querySelector(".logout-container");
         let ul = document.createElement("ul");
-        logoutContainer.appendChilde(ul);
+        logoutContainer.appendChild(ul);
         //let values = Object.values(myjson);
         //for(let v of values){
             //let li = document.createElement("li");
