@@ -6,13 +6,14 @@ let usersURL = `${configURL}users`
 let updateGameURL = `${configURL}game`
 
 let container = document.querySelector(".first-view");
+let firstViewDiv = document.querySelector("#first-view");
 
 function displayWhoIsPlaying(){
     //select div element with id="who-is-playing" and add text with username and remove hidden class
-    let h2 = document.querySelector("#who-is-playing")
+    let h2 = document.createElement("h2");
     
     h2.innerHTML = ` ${window.localStorage.currentUser.username} is Playing`
-    
+    container.appendChild(h2);
     //wIPDiv.innerHTML = `
       //  <h2> ${user.username} is Playing </h2>
         //`
@@ -24,11 +25,11 @@ function displayWhoIsPlaying(){
 
 function clickLogOutButton(){
     let logOutButton = document.getElementById("logout-button");
-    logoutButton.addEventListener("click", function(e){
+    logOutButton.addEventListener("click", function(e){
         e.preventDefault();
-        window.localStorage.removeItem(userToken);
-        window.localStorage.removeItem(currentUser);
-        windowlocalStorage.removeItem(currentGame);
+        window.localStorage.removeItem("userToken");
+        window.localStorage.removeItem("currentUser");
+        windowlocalStorage.removeItem("currentGame");
         logoutButton.classList.add("hidden");
         let firstViewDiv = document.querySelector("#first-view");
         firstViewDiv.classList.remove("hidden")
@@ -39,7 +40,8 @@ function clickLogOutButton(){
 function renderOperatorButtons(){
    // let container = document.querySelector(".first-view");
     //container.innerHTML = "";
-    container.innerHTML =  `
+    let div = document.createElement("div");
+    div.innerHTML =  `
         <br>
         <h4> is Playing!</h4>
         <br>
@@ -51,6 +53,7 @@ function renderOperatorButtons(){
         <br>
         <br>
     `;
+    container.appendChild(div);
 
     let pOB = document.getElementById("plus-operator-button");
     let mOB = document.getElementById("minus-operator-button");
@@ -321,6 +324,7 @@ function submitLogIn(){
             //create new game or find game with id, points, stars, complete, user_id
             Game.displayGame();
             displayWhoIsPlaying();
+            displayUsersGames();
 
         })
         .catch( function(error){
@@ -328,7 +332,7 @@ function submitLogIn(){
         })
         renderOperatorButtons();
         displayLogoutButton();
-        displayUsersGames();
+        //displayUsersGames();
        
     })
  }
@@ -337,12 +341,16 @@ function clickLogIn (){
     let logInButton = document.getElementById("log-in-1");
     logInButton.addEventListener("click", function(e){
         console.log(e);
-        document.querySelector(".first-view").innerHTML = `<form id="log-in-form">Name:<br>
+        firstViewDiv.classList.add("hidden");
+        let logInDiv = document.createElement("div");
+        logInDiv.classList.add("form");
+        logInDiv.innerHTML = `<form id="log-in-form">Name:<br>
         <input type="text" name="name" id="log-in-name"><br>
         password: <br>
         <input type="text" name="password" id="log-in-password"><br>
         <input type="submit" id="log-in-submit" value="Submit">
         </form>`
+        container.appendChild(logInDiv);
         submitLogIn();
     })
 }
@@ -351,12 +359,16 @@ function clickSignUp(){
     let signUpButton = document.getElementById("sign-up-1");
     signUpButton.addEventListener("click", function(e){
         console.log(e);
-        document.querySelector(".first-view").innerHTML = `<form id="sign-up-form">Name:<br>
+        firstViewDiv.classList.add("hidden");
+        let signUpDiv = document.createElement("div");
+        signUpDiv.classList.add("form");
+        signUpDiv.innerHTML = `<form id="sign-up-form">Name:<br>
         <input type="text" name="name" id="sign-up-name"><br>
         password: <br>
         <input type="text" name="password" id="sign-up-password"><br>
         <input type="submit" id="sign-up-submit" value="Submit">
         </form>`
+        container.appendChild(signUpDiv);
         submitSignUp();
         
     })
