@@ -11,8 +11,8 @@ let firstViewDiv = document.querySelector("#first-view");
 function displayWhoIsPlaying(){
     //select div element with id="who-is-playing" and add text with username and remove hidden class
     let h2 = document.createElement("h2");
-    
-    h2.innerHTML = ` ${window.localStorage.currentUser.username} is Playing`
+    let user = JSON.parse(window.localStorage.currentUser)
+    h2.innerHTML = ` ${user.id} is Playing`
     container.appendChild(h2);
     //wIPDiv.innerHTML = `
       //  <h2> ${user.username} is Playing </h2>
@@ -29,8 +29,8 @@ function clickLogOutButton(){
         e.preventDefault();
         window.localStorage.removeItem("userToken");
         window.localStorage.removeItem("currentUser");
-        windowlocalStorage.removeItem("currentGame");
-        logoutButton.classList.add("hidden");
+        window.localStorage.removeItem("currentGame");
+        logOutButton.classList.add("hidden");
         let firstViewDiv = document.querySelector("#first-view");
         firstViewDiv.classList.remove("hidden")
         document.querySelector(".current-game").classList.add("hidden")
@@ -40,10 +40,10 @@ function clickLogOutButton(){
 function renderOperatorButtons(){
    // let container = document.querySelector(".first-view");
     //container.innerHTML = "";
-    let div = document.createElement("div");
-    div.innerHTML =  `
+    let user = JSON.parse(window.localStorage.currentUser)
+    container.innerHTML =   `
         <br>
-        <h4> is Playing!</h4>
+        <h4> ${user.id} is Playing!</h4>
         <br>
         <button type="button" id="plus-operator-button">+</button>
         <button type="button" id="minus-operator-button">-</button>
@@ -53,7 +53,7 @@ function renderOperatorButtons(){
         <br>
         <br>
     `;
-    container.appendChild(div);
+    
 
     let pOB = document.getElementById("plus-operator-button");
     let mOB = document.getElementById("minus-operator-button");
@@ -298,6 +298,7 @@ function submitLogIn(){
                 password: passwordInput
             })
         };
+        e.preventDefault();
         //debugger
 
         fetch(logInURL, logInObject)
