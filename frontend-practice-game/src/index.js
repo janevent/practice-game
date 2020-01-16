@@ -7,11 +7,12 @@ let updateGameURL = `${configURL}game`
 
 let container = document.querySelector(".first-view");
 
-function displayWhoIsPlaying(user){
+function displayWhoIsPlaying(){
     //select div element with id="who-is-playing" and add text with username and remove hidden class
-    let wIPDiv = document.createElement("h2");
-    wIPDiv.innerHTML = ` ${user.username} is Playing`
-    container.append(wIPDiv)
+    let div = document.querySelector("#who-is-playing")
+    let h2 = document.createElement("h2");
+    h2.innerHTML = ` ${window.localStorage.currentUser.username} is Playing`
+    div.append(h2)
     //wIPDiv.innerHTML = `
       //  <h2> ${user.username} is Playing </h2>
         //`
@@ -19,15 +20,7 @@ function displayWhoIsPlaying(user){
     //wIPDiv.classList.remove("hidden")
 }
 
-function displayUsers(){
-    fetch(usersURL)
-    .then(function(response){ return response.json()
-    })
-    .then(function(myjson){
-        console.log("Users:", myjson)
-        //iterate over each user and display how many games they have completed
-    })
-}
+
 
 function clickLogOutButton(){
     let logOutButton = document.getElementById("logout-button");
@@ -171,6 +164,7 @@ function displayLogoutButton(){
         //fetch(logOurURL, logOutObject)
         //.then(response => response.json())
         //.then(myjson => console.log(myjson))
+        e.preventDefault();
         window.localStorage.removeItem(userToken);
         window.localStorage.removeItem(currentUser);
         windowlocalStorage.removeItem(currentGame);
@@ -206,9 +200,9 @@ function displayUsersGames(){
     .then(function(response){ return response.json()})
     .then(function(myjson){ 
         console.log("userGames", myjson)
-        let logoutContainer = document.querySelector("#logout-container");
+        let usersGamesDiv = document.querySelector(".users-games");
         let table = document.createElement("table");
-        logoutContainer.appendChild(table);
+        usersGamesDiv.appendChild(table);
         for(let user of myjson){
             let tr = document.createElement("tr");
             tr.innerHTML = `<td>${user}<td>`
@@ -282,6 +276,7 @@ function submitSignUp(){
             //render username
             console.log("user:", user)
             Game.displayGame();
+            displayWhoIsPlaying();
         })
         .catch(error => console.error('Error:', error))
 
@@ -351,6 +346,7 @@ function submitLogIn(){
             //user = new User(myjson.data)
             //create new game or find game with id, points, stars, complete, user_id
             Game.displayGame();
+            displayWhoIsPlaying();
 
         })
         .catch( function(error){
