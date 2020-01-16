@@ -37,6 +37,14 @@ input {
     color: green;
 }
 
+.current-game {
+    position: absolute;
+    top: 50px;
+    right: 50px;
+    width: 100px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
 
 
 

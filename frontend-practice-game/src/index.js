@@ -193,7 +193,7 @@ function displayUsersGames(){
     .then(function(response){ return response.json()})
     .then(function(myjson){ 
         console.log("userGames", myjson)
-        let logoutContainer = document.querySelector(".logout-container");
+        let logoutContainer = document.querySelector("#logout-container");
         let ul = document.createElement("ul");
         logoutContainer.appendChild(ul);
         //let values = Object.values(myjson);
@@ -263,6 +263,7 @@ function submitSignUp(){
             //render game info on right panel
             //render username
             console.log("user:", user)
+            Game.displayGame();
         })
         .catch(error => console.error('Error:', error))
 
@@ -279,6 +280,8 @@ function submitSignUp(){
         displayLogoutButton();
 
         displayUsersGames();
+
+        //Game.displayGame();
         
     })
     }
@@ -329,6 +332,7 @@ function submitLogIn(){
 
             //user = new User(myjson.data)
             //create new game or find game with id, points, stars, complete, user_id
+            Game.displayGame();
 
         })
         .catch( function(error){
@@ -337,6 +341,7 @@ function submitLogIn(){
         renderOperatorButtons();
         displayLogoutButton();
         displayUsersGames();
+       // Game.displayGame();
     })
  }
 

@@ -22,6 +22,11 @@ class UsersController < ApplicationController
         end
     end
 
+    def show 
+        token = headers["Authorization"].split(" ").last
+        Auth.decode_token(token)
+    end
+
     def index
         users = User.all 
         #does games need to be in an array?

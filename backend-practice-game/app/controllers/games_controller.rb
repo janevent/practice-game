@@ -10,7 +10,7 @@ class GamesController < ApplicationController
 
     def show 
         #game = Game.find_by(id: params[:id])
-        token = headers["Authorization"]
+        token = headers["Authorization"].split(" ").last
         if token && Auth.decode_token(token)
             game = Game.find_by(id: params[:id])
             if game 
