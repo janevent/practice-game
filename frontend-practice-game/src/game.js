@@ -21,13 +21,15 @@ class Game {
             h3.innerText = `Points: ${points}`;
             gameDiv.appendChild(h3);
             let table = document.createElement("table")
-            //gameDiv.appendChild(table)
+            gameDiv.appendChild(table)
             for(let i = 0; i < stars.length; i++){
+                let tr = document.createElement("tr")
                 let td = document.createElement("td");
                 td.innerHTML = `
                 <i class='fas fa-star' style='font-size: 48px; color:yellow></i>
                 `
-                table.appendChild(td)
+                tr.appendChild(td);
+                table.appendChild(tr);
             }
             //create currentGame table on right side of screen
             //Points: 50

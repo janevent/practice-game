@@ -171,8 +171,21 @@ function displayLogoutButton(){
         //fetch(logOurURL, logOutObject)
         //.then(response => response.json())
         //.then(myjson => console.log(myjson))
-        localStorage.removeItem(userToken);
+        window.localStorage.removeItem(userToken);
+        window.localStorage.removeItem(currentUser);
+        windowlocalStorage.removeItem(currentGame);
         logoutButton.classList.add("hidden");
+        let firstview = document.querySelector(".first-view");
+        firstview.innerHTML = `
+        <h3>Practice Equations For Fun!</h3>
+        <h2 class="hidden" id="who-is-playing">
+    
+        </h2>
+        <button type="button" id="log-in-1">Log In</button>
+        <p><em>or</em></p>
+        <button type="button" id="sign-up-1">Sign Up</button>
+        `
+        document.querySelector(".current-game").classList.add("hidden")
         //window.localStorage.removeItem(data.token) 
         //remove token to signout
     });   
@@ -194,8 +207,13 @@ function displayUsersGames(){
     .then(function(myjson){ 
         console.log("userGames", myjson)
         let logoutContainer = document.querySelector("#logout-container");
-        let ul = document.createElement("ul");
-        logoutContainer.appendChild(ul);
+        let table = document.createElement("table");
+        logoutContainer.appendChild(table);
+        for(let user of myjson){
+            let tr = document.createElement("tr");
+            tr.innerHTML = `<td>${user}<td>`
+            table.appendChild(tr);
+        }
         //let values = Object.values(myjson);
         //for(let v of values){
             //let li = document.createElement("li");
@@ -341,7 +359,7 @@ function submitLogIn(){
         renderOperatorButtons();
         displayLogoutButton();
         displayUsersGames();
-       // Game.displayGame();
+       
     })
  }
 
