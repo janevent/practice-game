@@ -20,6 +20,15 @@ class Game {
             h3.classList.add("current-points");
             h3.innerText = `Points: ${points}`;
             gameDiv.appendChild(h3);
+            let table = document.createElement("table")
+            //gameDiv.appendChild(table)
+            for(let i = 0; i < stars.length; i++){
+                let td = document.createElement("td");
+                td.innerHTML = `
+                <i class='fas fa-star' style='font-size: 48px; color:yellow></i>
+                `
+                table.appendChild(td)
+            }
             //create currentGame table on right side of screen
             //Points: 50
             // *      * etc.

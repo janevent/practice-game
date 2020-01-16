@@ -39,7 +39,7 @@ input {
 
 .current-game {
     position: absolute;
-    top: 50px;
+    top: 100px;
     right: 50px;
     width: 100px;
     font-family: 'Courier New', Courier, monospace;
