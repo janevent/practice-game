@@ -9,10 +9,10 @@ let container = document.querySelector(".first-view");
 
 function displayWhoIsPlaying(){
     //select div element with id="who-is-playing" and add text with username and remove hidden class
-    let div = document.querySelector("#who-is-playing")
-    let h2 = document.createElement("h2");
+    let h2 = document.querySelector("#who-is-playing")
+    
     h2.innerHTML = ` ${window.localStorage.currentUser.username} is Playing`
-    div.append(h2)
+    
     //wIPDiv.innerHTML = `
       //  <h2> ${user.username} is Playing </h2>
         //`
@@ -25,9 +25,14 @@ function displayWhoIsPlaying(){
 function clickLogOutButton(){
     let logOutButton = document.getElementById("logout-button");
     logoutButton.addEventListener("click", function(e){
+        e.preventDefault();
         window.localStorage.removeItem(userToken);
         window.localStorage.removeItem(currentUser);
-        window.localStorage.removeItem(currentGame)
+        windowlocalStorage.removeItem(currentGame);
+        logoutButton.classList.add("hidden");
+        let firstViewDiv = document.querySelector("#first-view");
+        firstViewDiv.classList.remove("hidden")
+        document.querySelector(".current-game").classList.add("hidden")
     })
 }
 
@@ -149,40 +154,7 @@ function renderOperatorButtons(){
 function displayLogoutButton(){
     let logoutButton = document.getElementById("logout-button");
     logoutButton.classList.remove("hidden");
-    logoutButton.addEventListener("click", function(e){
-        //logOutObject = {
-          //  method: "DELETE",
-            //headers: {
-              //  "Content-Type": "application/json"
-            
-            //},
-            //body: JSON.stringify({
-              //  user_id: user.id,
-                //username: user.username
-            //})
-        //}
-        //fetch(logOurURL, logOutObject)
-        //.then(response => response.json())
-        //.then(myjson => console.log(myjson))
-        e.preventDefault();
-        window.localStorage.removeItem(userToken);
-        window.localStorage.removeItem(currentUser);
-        windowlocalStorage.removeItem(currentGame);
-        logoutButton.classList.add("hidden");
-        let firstview = document.querySelector(".first-view");
-        firstview.innerHTML = `
-        <h3>Practice Equations For Fun!</h3>
-        <h2 class="hidden" id="who-is-playing">
-    
-        </h2>
-        <button type="button" id="log-in-1">Log In</button>
-        <p><em>or</em></p>
-        <button type="button" id="sign-up-1">Sign Up</button>
-        `
-        document.querySelector(".current-game").classList.add("hidden")
-        //window.localStorage.removeItem(data.token) 
-        //remove token to signout
-    });   
+    clickLogOutButton(); 
 }
 
 
@@ -280,6 +252,8 @@ function submitSignUp(){
         })
         .catch(error => console.error('Error:', error))
 
+        let firstViewDiv = document.querySelector("#first-view");
+        firstViewDiv.classList.add("hidden");
         //user.id, user.username, incomplete_game.points, incomplete_games.stars, incomplete_game.id, incomplete_game.complete, incomplete_game.user_id
         //token
 
