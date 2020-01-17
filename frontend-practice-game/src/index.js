@@ -43,6 +43,7 @@ function clickLogOutButton(){
         document.querySelector(".current-game").classList.add("hidden");
         document.querySelector(".users-games").classList.add("hidden");
         logOutButton.classList.add("hidden");
+        //needs first page functionality without refreshing page
     })
 }
 
@@ -51,6 +52,7 @@ function renderOperatorButtons(){
     //container.innerHTML = "";
     //debugger
     let u = JSON.parse(window.localStorage.currentUser)
+    //why does it sometimes work and sometimes not?
     container.innerHTML =   `
         <br>
         <h4> ${u.id} is Playing!</h4>
@@ -77,7 +79,7 @@ function renderOperatorButtons(){
         let operator = " + ";
         let additionQuestion = new Question(num1, operator, num2);
         additionQuestion.renderQues();
-        let checkButton = document.selectElementById("check-answer");
+        let checkButton = document.getElementById("check-answer");
         checkButton.addEventListener("click", function(e){
             let answer = document.getElementById("user-answer").value;
             let check = additionQuestion.checkAnswer(answer);
@@ -114,7 +116,7 @@ function renderOperatorButtons(){
                         points: points,
                         stars: stars,
                         complete: complete,
-                        user_id: UserId
+                        user_id: userId
                     }
                 }
                 fetch(updateGameURL, updateGameConfig)
@@ -122,6 +124,17 @@ function renderOperatorButtons(){
                 .then((myJson) => console.log(myJson))
                 //send fetch request and update localStorage.currentGame
                 //update points and stars on right column
+                let gameDiv = document.querySelector(".current-game");
+                gameDiv.innerHTML = `
+                <h3>Points: ${points}</h3>
+                
+                `
+                //<table>
+                //for(let i = 0; i < stars; i++){ //create below elements}
+                //<td>
+                //<tr><span class="fa fas star"><tr>
+                //</td>
+                //</table>
             } else {
                 answer.classList.add("red");
                 //render answer red
