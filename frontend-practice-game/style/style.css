@@ -40,7 +40,7 @@ input {
 
 .current-game {
     background-color: lightskyblue;
-    margin: 5px;
+    margin: 10px;
     position: absolute;
     top: 100px;
     right: 50px;
@@ -50,11 +50,11 @@ input {
 
 .users-games {
     background-color: lightgreen;
-    margin: 5px;
+    margin: 10px;
     position: absolute;
     top: 100px;
     left: 50px;
-    width: 100px;
+    width: 200px;
     font-family: 'Courier New', Courier, monospace;
 }
 

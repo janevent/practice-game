@@ -40,10 +40,11 @@ function clickLogOutButton(){
 function renderOperatorButtons(){
    // let container = document.querySelector(".first-view");
     //container.innerHTML = "";
-    let user = JSON.parse(window.localStorage.currentUser)
+    //debugger
+    let u = JSON.parse(window.localStorage.currentUser)
     container.innerHTML =   `
         <br>
-        <h4> ${user.id} is Playing!</h4>
+        <h4> ${u.id} is Playing!</h4>
         <br>
         <button type="button" id="plus-operator-button">+</button>
         <button type="button" id="minus-operator-button">-</button>
