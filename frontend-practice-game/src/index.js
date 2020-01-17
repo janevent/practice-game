@@ -26,14 +26,23 @@ function displayWhoIsPlaying(){
 function clickLogOutButton(){
     let logOutButton = document.getElementById("logout-button");
     logOutButton.addEventListener("click", function(e){
-        e.preventDefault();
+        //e.preventDefault();
         window.localStorage.removeItem("userToken");
         window.localStorage.removeItem("currentUser");
         window.localStorage.removeItem("currentGame");
+        container.innerHTML = `
+        <div id="first-view">
+            <h3>Practice Equations For Fun!</h3>
+            <h2 class="hidden" id="who-is-playing">    
+            </h2>
+            <button type="button" id="log-in-1">Log In</button>
+            <p><em>or</em></p>
+            <button type="button" id="sign-up-1">Sign Up</button>
+        </div>
+        `
+        document.querySelector(".current-game").classList.add("hidden");
+        document.querySelector(".users-games").classList.add("hidden");
         logOutButton.classList.add("hidden");
-        let firstViewDiv = document.querySelector("#first-view");
-        firstViewDiv.classList.remove("hidden")
-        document.querySelector(".current-game").classList.add("hidden")
     })
 }
 
