@@ -7,8 +7,8 @@ class Question{
     }
 
     checkAnswer(answer){
-        debugger
-        if(eval(`${this.firstNum} ${this.operator}`) === parseInt(answer)){
+        //debugger
+        if(eval(`${this.firstNum} ${this.operator} ${this.secondNum}`) === parseInt(answer)){
             return true;
         } else {
             return false;

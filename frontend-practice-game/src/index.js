@@ -47,15 +47,110 @@ function clickLogOutButton(){
     })
 }
 
+function updateCurrentGame(answerField){
+    let cg = window.localStorage.currentGame
+    console.log("current game:", cg);
+    console.log("parsed game:", JSON.parse(`${cg}`))
+    let cGame = JSON.parse(`'${cg}'`)
+    let id = cGame.id;
+    let points = cGame.points;
+    points += 1;
+    //increment points by one
+    let stars = cGame.stars;
+    stars = Math.floor(points/10);
+    //update stars;
+    let complete = cGame.complete;
+    if(points== 100){
+        complete = true;
+    }
+    let userId = cGame.userId;
+    //let newPoints = points + 1
+    //stars = Math.floor(newPoints/10)
+    //can it be update?
+    let token = window.localStorage.userToken
+        let updateGameConfig = {
+            method: "PUT",
+            headers: {
+                "Content-type": "application/json",
+                "Authorization": `Bearer ${token}` 
+            },
+            body: {
+                id: id,
+                points: points,
+                stars: stars,
+                complete: complete,
+                user_id: userId
+            }
+        }
+        fetch(updateGameURL, updateGameConfig)
+        .then( (response) => response.json() )
+        .then((myJson) => console.log(myJson))
+        //send fetch request and update localStorage.currentGame
+        //update points and stars on right column
+        let gameDiv = document.querySelector(".current-game");
+        gameDiv.innerHTML = `
+        <h3>Points: ${points}</h3>
+                 
+        `
+                 //<table>
+                 //for(let i = 0; i < stars; i++){ //create below elements}
+                 //<td>
+                 //<tr><span class="fa fas star"><tr>
+                 //</td>
+                 //</table>
+}
+
+function addEventListenerOnCheck(additionQuestion){
+    let check = document.querySelector("form");
+         check.addEventListener("submit", function(e){
+             console.log("Event:", e);
+             //debugger
+             //console.log( e.target)
+             e.preventDefault();
+             let answer = document.querySelector("#user-answer").value;
+             let answerField = document.querySelector("#user-answer");
+             //debugger
+             //console.log(e.target["#user-answer"].value);
+             let check = additionQuestion.checkAnswer(answer);
+             if(check){
+                 // render answer green
+                 answerField.classList.add("green");
+                 // render answer green
+                 //find currentGame
+                 //debugger
+                 updateCurrentGame();
+                 
+             } else {
+                 answerField.classList.add("red");
+                 //render answer red
+             }
+         })
+}
+
+function addEventListenerOnPlus(){
+    let pOB = document.getElementById("plus-operator-button");
+    pOB.addEventListener("click", function(e){
+        //let fN = Math.float(random(0) + 1);
+         let num1 = Math.floor(Math.random() * 100) + 1;
+         let num2 = Math.floor(Math.random() * 100) + 1;
+         let operator = " + ";
+         let additionQuestion = new Question(num1, operator, num2);
+         additionQuestion.renderQues();
+         //debugger
+         addEventListenerOnCheck(additionQuestion);
+    })
+
+}
+
 function renderOperatorButtons(){
    // let container = document.querySelector(".first-view");
     //container.innerHTML = "";
     //debugger
-    let u = JSON.parse(window.localStorage.currentUser)
+    //let u = JSON.parse(window.localStorage.currentUser)
     //why does it sometimes work and sometimes not?
     container.innerHTML =   `
         <br>
-        <h4> ${u.id} is Playing!</h4>
+    
         <br>
         <button type="button" id="plus-operator-button">+</button>
         <button type="button" id="minus-operator-button">-</button>
@@ -65,94 +160,14 @@ function renderOperatorButtons(){
         <br>
         <br>
     `;
+    addEventListenerOnPlus();
     
 
-    let pOB = document.getElementById("plus-operator-button");
     let mOB = document.getElementById("minus-operator-button");
     let tOB = document.getElementById("times-operator-button");
     let dOB = document.getElementById("divide-operator-button");
 
-   pOB.addEventListener("click", function(e){
-       //let fN = Math.float(random(0) + 1);
-        let num1 = Math.floor(Math.random() * 100) + 1;
-        let num2 = Math.floor(Math.random() * 100) + 1;
-        let operator = " + ";
-        let additionQuestion = new Question(num1, operator, num2);
-        additionQuestion.renderQues();
-        //debugger
-        let check = document.querySelector("form");
-        check.addEventListener("submit", function(e){
-            console.log("Event:", e);
-            //debugger
-            //console.log( e.target)
-            e.preventDefault();
-            let answer = document.querySelector("#user-answer").value;
-            //debugger
-            //console.log(e.target["#user-answer"].value);
-            let check = additionQuestion.checkAnswer(answer);
-            if(check){
-                // render answer green
-                answer.classList.add("green");
-                // render answer green
-                //find currentGame
-                let currentGame = JSON.parse(window.localStorage.currentGame);
-                let id = currentGame.id;
-                let points = currentGame.points;
-                points += 1;
-                //increment points by one
-                let stars = currentGame.stars;
-                stars = Math.floor(points/10);
-                //update stars;
-                let complete = currentGame.complete;
-                if(points== 100){
-                    complete = true;
-                }
-                let userId = currentGame.userId;
-                //let newPoints = points + 1
-                //stars = Math.floor(newPoints/10)
-                //can it be update?
-                let token = window.localStorage.userToken
-                let updateGameConfig = {
-                    method: "PUT",
-                    headers: {
-                        "Content-type": "application/json",
-                        "Authorization": `Bearer ${token}` 
-                    },
-                    body: {
-                        id: gameId,
-                        points: points,
-                        stars: stars,
-                        complete: complete,
-                        user_id: userId
-                    }
-                }
-                fetch(updateGameURL, updateGameConfig)
-                .then( (response) => response.json() )
-                .then((myJson) => console.log(myJson))
-                //send fetch request and update localStorage.currentGame
-                //update points and stars on right column
-                let gameDiv = document.querySelector(".current-game");
-                gameDiv.innerHTML = `
-                <h3>Points: ${points}</h3>
-                
-                `
-                //<table>
-                //for(let i = 0; i < stars; i++){ //create below elements}
-                //<td>
-                //<tr><span class="fa fas star"><tr>
-                //</td>
-                //</table>
-            } else {
-                answer.classList.add("red");
-                //render answer red
-            }
-        })
-
-       // let newAdditionQuestion = new Question()
-        //question is random number between 1 and 100 + random number between 1 and 100
-        //renders a question added on to the container HTML
-        //need a question generator class?
-    });
+   
 
     mOB.addEventListener("click", function(e){
         let num1 = Math.floor(Math.random() * 100) + 1;
