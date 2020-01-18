@@ -79,11 +79,18 @@ function renderOperatorButtons(){
         let operator = " + ";
         let additionQuestion = new Question(num1, operator, num2);
         additionQuestion.renderQues();
-        let checkButton = document.getElementById("check-answer");
-        checkButton.addEventListener("click", function(e){
-            let answer = document.getElementById("user-answer").value;
+        //debugger
+        let check = document.querySelector("form");
+        check.addEventListener("submit", function(e){
+            console.log("Event:", e);
+            //debugger
+            //console.log( e.target)
+            e.preventDefault();
+            let answer = document.querySelector("#user-answer").value;
+            //debugger
+            //console.log(e.target["#user-answer"].value);
             let check = additionQuestion.checkAnswer(answer);
-            if(!!check){
+            if(check){
                 // render answer green
                 answer.classList.add("green");
                 // render answer green
