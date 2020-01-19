@@ -12,7 +12,7 @@ function displayWhoIsPlaying(){
     //select div element with id="who-is-playing" and add text with username and remove hidden class
     let h2 = document.createElement("h2");
     let user = JSON.parse(window.localStorage.currentUser)
-    h2.innerHTML = ` ${user.id} is Playing`
+    h2.innerHTML = ` ${user.username} is Playing`
     container.appendChild(h2);
     //wIPDiv.innerHTML = `
       //  <h2> ${user.username} is Playing </h2>
@@ -44,6 +44,8 @@ function clickLogOutButton(){
         document.querySelector(".users-games").classList.add("hidden");
         logOutButton.classList.add("hidden");
         //needs first page functionality without refreshing page
+        clickLogIn();
+        clickSignUp();
     })
 }
 
@@ -64,6 +66,8 @@ function updateCurrentGame(answerField){
         complete = true;
     }
     let userId = cGame.userId;
+    let game = new Game(id, points, stars, complete, userID)
+    window.localStorage.setItem("currentGame", JSON.stringify(game))
     //let newPoints = points + 1
     //stars = Math.floor(newPoints/10)
     //can it be update?
@@ -364,7 +368,7 @@ function submitLogIn(){
             let user = myjson.user.data.attributes;
             let userId = user.id;
             let username = user.username;
-            let nu = new User(userId, username)
+            let nu = new User(username, userID)
             window.localStorage.setItem("userToken", myjson.token)
             window.localStorage.setItem("currentUser", JSON.stringify(nu));
             window.localStorage.setItem("currentGame", JSON.stringify(ng));
@@ -390,16 +394,16 @@ function clickLogIn (){
     let logInButton = document.getElementById("log-in-1");
     logInButton.addEventListener("click", function(e){
         console.log(e);
-        firstViewDiv.classList.add("hidden");
-        let logInDiv = document.createElement("div");
-        logInDiv.classList.add("form");
-        logInDiv.innerHTML = `<form id="log-in-form">Name:<br>
+        //firstViewDiv.classList.add("hidden");
+        //let logInDiv = document.createElement("div");
+        //logInDiv.classList.add("form");
+        container.innerHTML = `<form id="log-in-form">Name:<br>
         <input type="text" name="name" id="log-in-name"><br>
         password: <br>
         <input type="text" name="password" id="log-in-password"><br>
         <input type="submit" id="log-in-submit" value="Submit">
         </form>`
-        container.appendChild(logInDiv);
+        //container.appendChild(logInDiv);
         submitLogIn();
     })
 }
@@ -408,16 +412,16 @@ function clickSignUp(){
     let signUpButton = document.getElementById("sign-up-1");
     signUpButton.addEventListener("click", function(e){
         console.log(e);
-        firstViewDiv.classList.add("hidden");
-        let signUpDiv = document.createElement("div");
-        signUpDiv.classList.add("form");
-        signUpDiv.innerHTML = `<form id="sign-up-form">Name:<br>
+        //firstViewDiv.classList.add("hidden");
+        //let signUpDiv = document.createElement("div");
+        //signUpDiv.classList.add("form");
+        container.innerHTML = `<form id="sign-up-form">Name:<br>
         <input type="text" name="name" id="sign-up-name"><br>
         password: <br>
         <input type="text" name="password" id="sign-up-password"><br>
         <input type="submit" id="sign-up-submit" value="Submit">
         </form>`
-        container.appendChild(signUpDiv);
+        //container.appendChild(signUpDiv);
         submitSignUp();
         
     })
@@ -431,4 +435,3 @@ function clickSignUp(){
 
 clickLogIn();
 clickSignUp()
-submitSignUp();

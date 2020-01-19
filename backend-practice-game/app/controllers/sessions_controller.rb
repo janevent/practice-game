@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
         if user && user.authenticate(params[:password])
 
             token = Auth.create_token({username: user.username, id: user.id})
-            #binding.pry
+            binding.pry
             #Game.where(complete: false)
             incomplete_game = user.games.incomplete_game[0]
             #render json: { user: {id: user.id, username: user.username}, incomplete_game: incomplete_game, token: Auth.create_token({ username: user.username, id: user.id}) }
