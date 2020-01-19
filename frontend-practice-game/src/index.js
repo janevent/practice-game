@@ -51,7 +51,7 @@ function updateCurrentGame(answerField){
     let cg = window.localStorage.currentGame
     console.log("current game:", cg);
     console.log("parsed game:", JSON.parse(`${cg}`))
-    let cGame = JSON.parse(`'${cg}'`)
+    let cGame = JSON.parse(cg)
     let id = cGame.id;
     let points = cGame.points;
     points += 1;
@@ -100,7 +100,7 @@ function updateCurrentGame(answerField){
                  //</table>
 }
 
-function addEventListenerOnCheck(additionQuestion){
+function addEventListenerOnCheck(question){
     let check = document.querySelector("form");
          check.addEventListener("submit", function(e){
              console.log("Event:", e);
@@ -111,7 +111,7 @@ function addEventListenerOnCheck(additionQuestion){
              let answerField = document.querySelector("#user-answer");
              //debugger
              //console.log(e.target["#user-answer"].value);
-             let check = additionQuestion.checkAnswer(answer);
+             let check = question.checkAnswer(answer);
              if(check){
                  // render answer green
                  answerField.classList.add("green");
@@ -142,6 +142,30 @@ function addEventListenerOnPlus(){
 
 }
 
+function addEventListenerOnMinus(){
+    let mOB = document.getElementById("minus-operator-button");
+    mOB.addEventListener("click", function(e){
+        let num1 = Math.floor(Math.random() * 100) + 1;
+        let num2 = Math.floor(Math.random() * 100) + 1;
+        let operator = " - ";
+        let minusQuestion = new Question(num1, operator, num2)
+        minusQuestion.renderQues();
+        addEventListenerOnCheck(minusQuestion);
+    });
+}
+
+function addEventListenerOnTimes(){
+    let tOB = document.getElementById("times-operator-button");
+    tOB.addEventListener("click", function(e){
+        let num1 = Math.floor(Math.random() * 10) + 1;
+        let num2 = Math.floor(Math.random() * 10) + 1;
+        let operator = " * ";
+        let timesQuestion = new Question(num1, operator, num2);
+        timesQuestion.renderQues();
+        addEventListenerOnCheck(timesQuestion)
+    })
+}
+
 function renderOperatorButtons(){
    // let container = document.querySelector(".first-view");
     //container.innerHTML = "";
@@ -161,33 +185,12 @@ function renderOperatorButtons(){
         <br>
     `;
     addEventListenerOnPlus();
-    
+    addEventListenerOnMinus();
+    addEventListenerOnTimes();
 
-    let mOB = document.getElementById("minus-operator-button");
+    
     let tOB = document.getElementById("times-operator-button");
     let dOB = document.getElementById("divide-operator-button");
-
-   
-
-    mOB.addEventListener("click", function(e){
-        let num1 = Math.floor(Math.random() * 100) + 1;
-        let num2 = Math.floor(Math.random() * 100) + 1;
-        let operator = " - ";
-        let minusQuestion = new Question(num1, operator, num2)
-        minusQuestion.renderQues();
-
-
-
-    });
-
-    tOB.addEventListener("click", function(e){
-        let num1 = Math.floor(Math.random() * 10) + 1;
-        let num2 = Math.floor(Math.random() * 10) + 1;
-        let operator = " * ";
-        let timesQuestion = new Question(num1, operator, num2);
-        timesQuestion.renderQues();
-
-    })
 
     //dOB.addEventListener("click", function(e){
 
