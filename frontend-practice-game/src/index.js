@@ -52,7 +52,7 @@ function clickLogOutButton(){
 function updateCurrentGame(answerField){
     let cg = window.localStorage.currentGame
     console.log("current game:", cg);
-    console.log("parsed game:", JSON.parse(`${cg}`))
+    console.log("parsed game:", JSON.parse(cg))
     let cGame = JSON.parse(cg)
     let id = cGame.id;
     let points = cGame.points;
@@ -66,29 +66,30 @@ function updateCurrentGame(answerField){
         complete = true;
     }
     let userId = cGame.userId;
-    let game = new Game(id, points, stars, complete, userID)
+    let game = new Game(id, points, stars, complete, userId)
     window.localStorage.setItem("currentGame", JSON.stringify(game))
     //let newPoints = points + 1
     //stars = Math.floor(newPoints/10)
     //can it be update?
     let token = window.localStorage.userToken
         let updateGameConfig = {
-            method: "PUT",
+            method: "PATCH",
             headers: {
                 "Content-type": "application/json",
                 "Authorization": `Bearer ${token}` 
             },
-            body: {
+            body: JSON.stringify({
                 id: id,
                 points: points,
                 stars: stars,
                 complete: complete,
                 user_id: userId
-            }
+            })
         }
         fetch(updateGameURL, updateGameConfig)
         .then( (response) => response.json() )
-        .then((myJson) => console.log(myJson))
+        .then((myJson) => console.log("Success:", myJson))
+        .catch((error) => console.error("Error:", error))
         //send fetch request and update localStorage.currentGame
         //update points and stars on right column
         let gameDiv = document.querySelector(".current-game");
@@ -124,10 +125,15 @@ function addEventListenerOnCheck(question){
                  //debugger
                  updateCurrentGame();
                  
+                 
              } else {
                  answerField.classList.add("red");
                  //render answer red
+                 
              }
+            addEventListenerOnPlus();
+            addEventListenerOnMinus();
+            addEventListenerOnTimes();
          })
 }
 
@@ -271,6 +277,7 @@ function submitSignUp(){
                 password: userPassword
               })
         }
+        //debugger
         //post fetch request
         fetch(signUpURL, configurationObject)
         .then((response) => {
@@ -280,7 +287,7 @@ function submitSignUp(){
             return response.json()
         })
         .then((myjson) => {
-            
+            //debugger
             console.log('Success:', JSON.stringify(myjson))
             window.localStorage.setItem('userToken', myjson.token)
             
@@ -368,11 +375,11 @@ function submitLogIn(){
             let user = myjson.user.data.attributes;
             let userId = user.id;
             let username = user.username;
-            let nu = new User(username, userID)
+            let nu = new User(username, userId)
             window.localStorage.setItem("userToken", myjson.token)
             window.localStorage.setItem("currentUser", JSON.stringify(nu));
             window.localStorage.setItem("currentGame", JSON.stringify(ng));
-
+            console.log()
             //user = new User(myjson.data)
             //create new game or find game with id, points, stars, complete, user_id
             Game.displayGame();

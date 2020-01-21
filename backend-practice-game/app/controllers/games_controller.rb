@@ -10,7 +10,7 @@ class GamesController < ApplicationController
 
     def show 
         #game = Game.find_by(id: params[:id])
-        token = headers["Authorization"].split(" ").last
+        token = request.env["HTTP_AUTHORIZATION"].split(" ").last
         if token && Auth.decode_token(token)
             game = Game.find_by(id: params[:id])
             if game 
@@ -20,15 +20,15 @@ class GamesController < ApplicationController
             end
         else
             render json: { errors: {message: "Need a valid token"}}
-            status: 500
         end
             
     end
 
     def update 
-        
+        #binding.pry
         #token  = headers userToken 
-        token = headers["Authorization"].split(" ").last
+        token = request.env["HTTP_AUTHORIZATION"].split(" ").last
+        #binding.pry
         if token && Auth.decode_token(token)
             game = Game.find_by(id: params[:id]);
             game.update(points: params[:points], stars: params[:stars], complete: params[:complete])
