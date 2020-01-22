@@ -43,7 +43,7 @@ function clickLogOutButton(){
         document.querySelector(".current-game").classList.add("hidden");
         document.querySelector(".users-games").classList.add("hidden");
         logOutButton.classList.add("hidden");
-        document.querySelector(".question-form").classList.add("hiddin");
+        document.querySelector(".question-form").classList.add("hidden");
         //needs first page functionality without refreshing page
         clickLogIn();
         clickSignUp();
@@ -105,11 +105,17 @@ function updateCurrentGame(answerField){
             tr.appendChild(td);
             let table = document.querySelector(".current-game-table");
             table.appendChild(tr);
-            td.innerHTML = `<div style="font-size: 48px">
+            td.innerHTML = `<div style="font-size: 24px; color:yellow">
             <i class="far fas star fa-2x"></i>
             <i class="far fa-star"></i></div>
 
             `
+            if(!!complete){
+                container.innerHTML = "";
+                container.innerHTML = `
+                <h4>Congratulations!  You Won!! </h4>
+                `
+            }
 
         }
                  //<table>
@@ -146,6 +152,7 @@ function addEventListenerOnCheck(question){
                  //render answer red
                  
              }
+             //if  new Game(JSON.parse(window.localStorage.currentGame)) game.complete === false {}
             addEventListenerOnPlus();
             addEventListenerOnMinus();
             addEventListenerOnTimes();
