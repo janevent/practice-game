@@ -22,11 +22,13 @@ class Game {
             gameDiv.appendChild(h3);
             let table = document.createElement("table")
             gameDiv.appendChild(table)
-            for(let i = 0; i < stars.length; i++){
+            //debugger
+            for(let i = 0; i < stars; i++){
                 let tr = document.createElement("tr")
                 let td = document.createElement("td");
-                td.innerHTML = `
-                <i class='fas fa-star' style='font-size: 48px; color:yellow></i>
+                td.innerHTML = `<div style="font-size: 24px; color:yellow">
+                <i class="far fa-star fa-2x"></i>
+              </div
                 `
                 tr.appendChild(td);
                 table.appendChild(tr);

@@ -43,6 +43,7 @@ function clickLogOutButton(){
         document.querySelector(".current-game").classList.add("hidden");
         document.querySelector(".users-games").classList.add("hidden");
         logOutButton.classList.add("hidden");
+        document.querySelector(".question-form").classList.add("hiddin");
         //needs first page functionality without refreshing page
         clickLogIn();
         clickSignUp();
@@ -95,8 +96,22 @@ function updateCurrentGame(answerField){
         let gameDiv = document.querySelector(".current-game");
         gameDiv.innerHTML = `
         <h3>Points: ${points}</h3>
+        <table class="current-game-table"></table>
                  
         `
+        for(let i = 0; i < stars; i++){
+            let td = document.createElement("td");
+            let tr = document.createElement("tr");
+            tr.appendChild(td);
+            let table = document.querySelector(".current-game-table");
+            table.appendChild(tr);
+            td.innerHTML = `<div style="font-size: 48px">
+            <i class="far fas star fa-2x"></i>
+            <i class="far fa-star"></i></div>
+
+            `
+
+        }
                  //<table>
                  //for(let i = 0; i < stars; i++){ //create below elements}
                  //<td>
