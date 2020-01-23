@@ -162,9 +162,10 @@ function addEventListenerOnCheck(question){
 function addEventListenerOnDivide(){
     let dOB = document.getElementById("divide-operator-button");
     dOB.addEventListener("click", function(e){
-        debugger
-        let rNum = Math.floor(Math.random() * (DivQuestions.getDivQuestions.length)) 
-        let divisionQuestion = DivQuestions.getDivQuestions[rNum];
+        //debugger
+        let divisionQuestionsArray = DivQuestions.generateDivQuestions();
+        let randomNum = Math.floor(Math.random() * divisionQuestionsArray.length);
+        let divisionQuestion = divisionQuestionsArray[randomNum]
         console.log("divques:", divisionQuestion)
         divisionQuestion.renderQues();
         addEventListenerOnCheck(divisionQuestion)
