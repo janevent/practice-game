@@ -105,7 +105,7 @@ function updateCurrentGame(answerField){
             tr.appendChild(td);
             let table = document.querySelector(".current-game-table");
             table.appendChild(tr);
-            td.innerHTML = `<div style="font-size: 24px; color:yellow">
+            td.innerHTML = `<div style="font-size: 48px; color:yellow">
             <i class="far fas star fa-2x"></i>
             <i class="far fa-star"></i></div>
 
@@ -115,49 +115,48 @@ function updateCurrentGame(answerField){
                 container.innerHTML = `
                 <h4>Congratulations!  You Won!! </h4>
                 `
+                //option to play a new game
             }
 
         }
-                 //<table>
-                 //for(let i = 0; i < stars; i++){ //create below elements}
-                 //<td>
-                 //<tr><span class="fa fas star"><tr>
-                 //</td>
-                 //</table>
 }
 
 function addEventListenerOnCheck(question){
     let check = document.querySelector("form");
+
+    //let answerField = document.querySelector("user-answer")
+    //if(!answerField.classList.contains("green")){
          check.addEventListener("submit", function(e){
              console.log("Event:", e);
              //debugger
              //console.log( e.target)
              e.preventDefault();
              let answer = document.querySelector("#user-answer").value;
-             let answerField = document.querySelector("#user-answer");
+             //let answerField = document.querySelector("#user-answer");
              //debugger
              //console.log(e.target["#user-answer"].value);
              let check = question.checkAnswer(answer);
              if(check){
                  // render answer green
+                 let answerField = document.querySelector("#user-answer");
                  answerField.classList.add("green");
                  // render answer green
                  //find currentGame
                  //debugger
-                 updateCurrentGame();
-                 
-                 
+                 updateCurrentGame();                 
              } else {
                  answerField.classList.add("red");
-                 //render answer red
-                 
+                 //render answer red                
              }
+            
              //if  new Game(JSON.parse(window.localStorage.currentGame)) game.complete === false {}
             addEventListenerOnPlus();
             addEventListenerOnMinus();
             addEventListenerOnTimes();
+            addEventListenerOnDivide();
          })
-}
+        }
+//}
 
 function addEventListenerOnDivide(){
     let dOB = document.getElementById("divide-operator-button");
@@ -168,7 +167,18 @@ function addEventListenerOnDivide(){
         let divisionQuestion = divisionQuestionsArray[randomNum]
         console.log("divques:", divisionQuestion)
         divisionQuestion.renderQues();
-        addEventListenerOnCheck(divisionQuestion)
+        let answerField = document.querySelector("#user-answer");
+        //debugger
+        if(!answerField.classList.contains("green")){
+            
+            addEventListenerOnCheck(divisionQuestion);
+        }else{
+            debugger
+            addEventListenerOnDivide();
+            addEventListenerOnPlus();
+            addEventListenerOnMinus();
+            addEventListenerOnTimes();
+        }
     })
 
 }
@@ -192,7 +202,7 @@ function addEventListenerOnMinus(){
     let mOB = document.getElementById("minus-operator-button");
     mOB.addEventListener("click", function(e){
         let num1 = Math.floor(Math.random() * 100) + 1;
-        let num2 = Math.floor(Math.random() * 100) + 1;
+        let num2 = Math.floor(Math.random() * num1) + 1;
         let operator = " - ";
         let minusQuestion = new Question(num1, operator, num2)
         minusQuestion.renderQues();
@@ -235,14 +245,6 @@ function renderOperatorButtons(){
     addEventListenerOnMinus();
     addEventListenerOnTimes();
     addEventListenerOnDivide();
-    
-    let tOB = document.getElementById("times-operator-button");
-    let dOB = document.getElementById("divide-operator-button");
-
-    //dOB.addEventListener("click", function(e){
-
-    //})
-
 
 }
 
