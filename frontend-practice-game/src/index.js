@@ -168,17 +168,8 @@ function addEventListenerOnDivide(){
         console.log("divques:", divisionQuestion)
         divisionQuestion.renderQues();
         let answerField = document.querySelector("#user-answer");
-        //debugger
-        if(!answerField.classList.contains("green")){
-            
-            addEventListenerOnCheck(divisionQuestion);
-        }else{
-            debugger
-            addEventListenerOnDivide();
-            addEventListenerOnPlus();
-            addEventListenerOnMinus();
-            addEventListenerOnTimes();
-        }
+        //debugger    
+        addEventListenerOnCheck(divisionQuestion);       
     })
 
 }
