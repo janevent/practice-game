@@ -18,6 +18,7 @@ class Question{
     renderQues(){
         //debugger
         document.querySelector(".question-form").innerHTML = `
+        <br>
         <form id="question-form">${this.firstNum} ${this.operator} ${this.secondNum} = <input type="text" name="answer" id="user-answer"><input type="submit" id="check-answer" value="check"></form>
     
         `

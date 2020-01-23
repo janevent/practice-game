@@ -10,10 +10,10 @@ let firstViewDiv = document.querySelector("#first-view");
 
 function displayWhoIsPlaying(){
     //select div element with id="who-is-playing" and add text with username and remove hidden class
-    let h2 = document.createElement("h2");
+    let h2 = document.querySelector(".put-name-here");
     let user = JSON.parse(window.localStorage.currentUser)
     h2.innerHTML = ` ${user.username} is Playing`
-    container.appendChild(h2);
+    //container.appendChild(h2);
     //wIPDiv.innerHTML = `
       //  <h2> ${user.username} is Playing </h2>
         //`
@@ -159,6 +159,19 @@ function addEventListenerOnCheck(question){
          })
 }
 
+function addEventListenerOnDivide(){
+    let dOB = document.getElementById("divide-operator-button");
+    dOB.addEventListener("click", function(e){
+        debugger
+        let rNum = Math.floor(Math.random() * (DivQuestions.getDivQuestions.length)) 
+        let divisionQuestion = DivQuestions.getDivQuestions[rNum];
+        console.log("divques:", divisionQuestion)
+        divisionQuestion.renderQues();
+        addEventListenerOnCheck(divisionQuestion)
+    })
+
+}
+
 function addEventListenerOnPlus(){
     let pOB = document.getElementById("plus-operator-button");
     pOB.addEventListener("click", function(e){
@@ -205,6 +218,7 @@ function renderOperatorButtons(){
     //let u = JSON.parse(window.localStorage.currentUser)
     //why does it sometimes work and sometimes not?
     container.innerHTML =   `
+        <h2 class="put-name-here"></h2>
         <br>
     
         <br>
@@ -219,7 +233,7 @@ function renderOperatorButtons(){
     addEventListenerOnPlus();
     addEventListenerOnMinus();
     addEventListenerOnTimes();
-
+    addEventListenerOnDivide();
     
     let tOB = document.getElementById("times-operator-button");
     let dOB = document.getElementById("divide-operator-button");
@@ -332,6 +346,7 @@ function submitSignUp(){
             //render username
             console.log("user:", user)
             Game.displayGame();
+            
             displayWhoIsPlaying();
         })
         .catch(error => console.error('Error:', error))
@@ -404,6 +419,7 @@ function submitLogIn(){
             console.log()
             //user = new User(myjson.data)
             //create new game or find game with id, points, stars, complete, user_id
+            
             Game.displayGame();
             displayWhoIsPlaying();
             displayUsersGames();
