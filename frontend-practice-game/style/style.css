@@ -22,17 +22,19 @@ body {
 }
 
 .question-form {
-    margin: 10px;
+    margin: 20px;
     background-color: teal;
     text-align: center;
     margin: 0 auto;
     font-family: 'Courier New', Courier, monospace;
 
     position: fixed;
-    top: 95%;
-    left: 50%;
+    top: 80%;
+    left: 47%;
     margin-top: -100px;
     margin-left: -200px;
+    
+
 }
 button {
     background-color: powderblue;
@@ -63,10 +65,11 @@ input {
 }
 
 .users-games {
-    background-color: lightgreen;
-    margin: 10px;
+    background-color: rgb(247, 70, 51);
+    margin: 20px;
     position: absolute;
     top: 100px;
+
     left: 50px;
     width: 200px;
     font-family: 'Courier New', Courier, monospace;

@@ -1,3 +1,4 @@
+function app(){
 let configURL = "http://localhost:3000/"
 let signUpURL = `${configURL}signup`
 let logInURL = `${configURL}login`
@@ -45,8 +46,9 @@ function clickLogOutButton(){
         logOutButton.classList.add("hidden");
         document.querySelector(".question-form").classList.add("hidden");
         //needs first page functionality without refreshing page
-        clickLogIn();
-        clickSignUp();
+        app();
+        //clickLogIn();
+        //clickSignUp();
     })
 }
 
@@ -111,10 +113,21 @@ function updateCurrentGame(answerField){
 
             `
             if(!!complete){
+                let user = JSON.parse(window.localStorage.currentUser)
                 container.innerHTML = "";
                 container.innerHTML = `
-                <h4>Congratulations!  You Won!! </h4>
+                <h1>Congratulations ${user.id}!  You Won!! </h1>
+                <br>
+                <br>
+                <button type="button" id="new-game" value="Start New Game">
                 `
+                let questionForm = document.querySelector(".question-form");
+                questionForm.classList.add("hidden");
+                let name = document.querySelector(".put-name-here");
+                name.classList.add(".hidden");
+                let games = document.querySelector(".users-games");
+                game.classList.add("hidden");
+                
                 //option to play a new game
             }
 
@@ -224,10 +237,10 @@ function renderOperatorButtons(){
         <br>
     
         <br>
-        <button type="button" id="plus-operator-button">+</button>
-        <button type="button" id="minus-operator-button">-</button>
-        <button type="button" id="times-operator-button">*</button>
-        <button type="button" id="divide-operator-button">/</button>
+        <button type="button" id="plus-operator-button"><i class="fas fa-plus"></i></button>
+        <button type="button" id="minus-operator-button"><i class="fas fa-minus"></i></button>
+        <button type="button" id="times-operator-button"><i class="fas fa-times"></i></button>
+        <button type="button" id="divide-operator-button"><i class="fas fa-divide"></i></button>
         <br>
         <br>
         <br>
@@ -268,7 +281,7 @@ function displayUsersGames(){
         usersGamesDiv.appendChild(table);
         for(let user of myjson){
             let tr = document.createElement("tr");
-            tr.innerHTML = `<td>${user}<td>`
+            tr.innerHTML = `<td>${user} game/s won<td>`
             table.appendChild(tr);
         }
         //let values = Object.values(myjson);
@@ -440,6 +453,7 @@ function clickLogIn (){
         <input type="text" name="name" id="log-in-name"><br>
         password: <br>
         <input type="text" name="password" id="log-in-password"><br>
+        <br>
         <input type="submit" id="log-in-submit" value="Submit">
         </form>`
         //container.appendChild(logInDiv);
@@ -458,6 +472,7 @@ function clickSignUp(){
         <input type="text" name="name" id="sign-up-name"><br>
         password: <br>
         <input type="text" name="password" id="sign-up-password"><br>
+        <br>
         <input type="submit" id="sign-up-submit" value="Submit">
         </form>`
         //container.appendChild(signUpDiv);
@@ -473,4 +488,7 @@ function clickSignUp(){
 
 
 clickLogIn();
-clickSignUp()
+clickSignUp();
+}
+
+app();
