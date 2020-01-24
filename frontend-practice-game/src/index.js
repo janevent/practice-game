@@ -19,8 +19,7 @@ function displayWhoIsPlaying(){
       //  <h2> ${user.username} is Playing </h2>
         //`
     //wIPDiv.removeAttribute(".who-is-playing")   
-    //wIPDiv.classList.remove("hidden")
-}
+    //wIPDiv.classList.remove("hidde
 
 
 
@@ -119,7 +118,7 @@ function updateCurrentGame(answerField){
                 <h1>Congratulations ${user.id}!  You Won!! </h1>
                 <br>
                 <br>
-                <button type="button" id="new-game" value="Start New Game">
+                <button type="button" id="new-game" value="New Game">
                 `
                 let questionForm = document.querySelector(".question-form");
                 questionForm.classList.add("hidden");
@@ -127,6 +126,7 @@ function updateCurrentGame(answerField){
                 name.classList.add(".hidden");
                 let games = document.querySelector(".users-games");
                 game.classList.add("hidden");
+                Game.clickNewGameButton();
                 
                 //option to play a new game
             }

@@ -40,4 +40,41 @@ class Game {
         } 
 
     }
+
+    static clickNewGameButton(){
+        let newGameButton = document.getElementById("new-game");
+        newGameButton.addEventListener("click", function(e){
+            console.log("Event", event);
+            let user = JSON.parse(window.localStorage.currentUser)
+            newGameConfiguration = {
+                method: "POST",
+                headers: {
+                    "Content-type": "Application/json",
+                    "Authorization": `Bearer, 
+                    4{window.localStorage.userToken}`
+                },
+                body: JSON.stringify({
+                    points: 0,
+                    stars: 0,
+                    complete: false,
+                    user_id: user.id
+                })
+            }
+            fetch(newGameURL, newGameConfiguration)
+            .then(response => response.json())
+            .then(function(myjson){
+                console.log("Success:", myjson)
+                let currentGame = myjson.data.game.attributes//?
+                let newGame = new Game(currentGame.id, currentGame.points, currentGame.stars, currentGame.complete, currentGame.userId )
+                window.localStorage.setItem("currentGame", JSON.stringify(newGame))
+                Game.displayGame();
+                displayWhoIsPlaying();
+                displayUsersGames();
+
+            })
+            .catch(error => console.error("Error:", error))
+            renderOperatorButtons();
+            displayLogoutButton();
+        })
+    }
 }
