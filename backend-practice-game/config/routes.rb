@@ -6,4 +6,5 @@ Rails.application.routes.draw do
   get '/games', to: "games#index"
   patch '/game', to: "games#update"
   get '/users', to: "users#index"
+  get '/games/new', to: "games#new"
 end

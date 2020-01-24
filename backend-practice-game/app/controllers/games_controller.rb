@@ -1,10 +1,20 @@
 class GamesController < ApplicationController 
     def index
-        token = request.env["HTTP_AUTHORIZATION"]
+        token = request.env["HTTP_AUTHORIZATION"].split(" ").last
         if token && Auth.decode_token(token)
             render json: Game.all 
         else
             render json: { errors: { message: "Need a valid token"} }, status: 500
+        end
+    end
+
+    def new
+        token = request.env["HTTP_AUTHORIZATION"].split(" ").last 
+        if token && Auth.decode_token(token)
+            game = Game.create(id: params[:id], points: params[:points], stars: params[:stars], complete: params[:complete], user_id: params[:user_id])
+            render json: GameSerializer.new(game)
+        else
+            render json: { errors: {message: "Can not find game"}} 
         end
     end
 
@@ -20,8 +30,7 @@ class GamesController < ApplicationController
             end
         else
             render json: { errors: {message: "Need a valid token"}}
-        end
-            
+        end            
     end
 
     def update 

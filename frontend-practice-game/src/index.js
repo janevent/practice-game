@@ -5,6 +5,7 @@ let logInURL = `${configURL}login`
 let logOutURL = `${configURL}logout`
 let usersURL = `${configURL}users`
 let updateGameURL = `${configURL}game`
+let newGameURL = `${configURL}games/new`
 
 let container = document.querySelector(".first-view");
 let firstViewDiv = document.querySelector("#first-view");
@@ -20,7 +21,7 @@ function displayWhoIsPlaying(){
         //`
     //wIPDiv.removeAttribute(".who-is-playing")   
     //wIPDiv.classList.remove("hidde
-
+}
 
 
 function clickLogOutButton(){
@@ -409,6 +410,7 @@ function submitLogIn(){
         .then( function(myjson){
             console.log("Success: ", myjson)
             //create new user or find user with username and user id from myjson object
+            if(myjson.data){
             let game = myjson.game.data.attributes;
             let gameId = game.id;
             let gameComplete = game.complete;
@@ -430,14 +432,20 @@ function submitLogIn(){
             Game.displayGame();
             displayWhoIsPlaying();
             displayUsersGames();
+            }else{
+                let error = myjson.errors.message
+                container.innerHTML = `${error}`
+            }
 
         })
         .catch( function(error){
             console.error('Error:', error)
         })
-        renderOperatorButtons();
-        displayLogoutButton();
+        if(window.localStorage.currentUser){
+            renderOperatorButtons();
+            displayLogoutButton();
         //displayUsersGames();
+        }
        
     })
  }
