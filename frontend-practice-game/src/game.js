@@ -42,16 +42,20 @@ class Game {
     }
 
     static clickNewGameButton(){
+        let configURL = "http://localhost:3000/"
+        let newGameURL = `${configURL}games/new`
         let newGameButton = document.getElementById("new-game");
         newGameButton.addEventListener("click", function(e){
             console.log("Event", event);
+            //debugger
             let user = JSON.parse(window.localStorage.currentUser)
-            newGameConfiguration = {
+            let token = window.localStorage.userToken;
+            let newGameConfiguration = {
                 method: "POST",
                 headers: {
                     "Content-type": "Application/json",
-                    "Authorization": `Bearer, 
-                    4{window.localStorage.userToken}`
+                    "Authorization": `Bearer 
+                    ${token}`
                 },
                 body: JSON.stringify({
                     points: 0,
@@ -66,7 +70,8 @@ class Game {
                 console.log("Success:", myjson)
                 let currentGame = myjson.data.game.attributes//?
                 let newGame = new Game(currentGame.id, currentGame.points, currentGame.stars, currentGame.complete, currentGame.userId )
-                window.localStorage.setItem("currentGame", JSON.stringify(newGame))
+                window.localStorage.setItem("currentGame", JSON.stringify(newGame)) 
+                container.innerHTML = " ";
                 Game.displayGame();
                 displayWhoIsPlaying();
                 displayUsersGames();

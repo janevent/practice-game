@@ -12,6 +12,7 @@ let firstViewDiv = document.querySelector("#first-view");
 
 function displayWhoIsPlaying(){
     //select div element with id="who-is-playing" and add text with username and remove hidden class
+    //debugger
     let h2 = document.querySelector(".put-name-here");
     let user = JSON.parse(window.localStorage.currentUser)
     h2.innerHTML = ` ${user.username} is Playing`
@@ -116,20 +117,22 @@ function updateCurrentGame(answerField){
                 let user = JSON.parse(window.localStorage.currentUser)
                 container.innerHTML = "";
                 container.innerHTML = `
-                <h1>Congratulations ${user.id}!  You Won!! </h1>
+                <h1>Congratulations ${user.username}!! You Won!! </h1>
                 <br>
                 <br>
-                <button type="button" id="new-game" value="New Game">
                 `
+                //<button type="button" id="new-game">New Game</button>
+                
                 let questionForm = document.querySelector(".question-form");
                 questionForm.classList.add("hidden");
-                let name = document.querySelector(".put-name-here");
-                name.classList.add(".hidden");
-                let games = document.querySelector(".users-games");
-                game.classList.add("hidden");
+                //let name = document.querySelector(".put-name-here");
+                //name.classList.add("hidden");
+                let ug = document.querySelector(".users-games");
+                ug.classList.add("hidden");
+                let cg = document.querySelector(".current-game");
+                cg.classList.add("hidden");
                 Game.clickNewGameButton();
-                
-                //option to play a new game
+                //why are games and game not hidden when hidden class is added?
             }
 
         }
@@ -410,7 +413,7 @@ function submitLogIn(){
         .then( function(myjson){
             console.log("Success: ", myjson)
             //create new user or find user with username and user id from myjson object
-            if(myjson.data){
+            if(myjson.user){
             let game = myjson.game.data.attributes;
             let gameId = game.id;
             let gameComplete = game.complete;
@@ -432,7 +435,7 @@ function submitLogIn(){
             Game.displayGame();
             displayWhoIsPlaying();
             displayUsersGames();
-            }else{
+            }else if(myjson.errors){
                 let error = myjson.errors.message
                 container.innerHTML = `${error}`
             }
