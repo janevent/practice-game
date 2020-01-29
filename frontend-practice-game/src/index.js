@@ -131,47 +131,49 @@ function updateCurrentGame(answerField){
                 ug.classList.add("hidden");
                 let cg = document.querySelector(".current-game");
                 cg.classList.add("hidden");
-                Game.clickNewGameButton();
-                //why are games and game not hidden when hidden class is added?
+               // Game.clickNewGameButton();
+                
             }
-
         }
 }
 
 function addEventListenerOnCheck(question){
     let check = document.querySelector("form");
-
     //let answerField = document.querySelector("user-answer")
     //if(!answerField.classList.contains("green")){
-         check.addEventListener("submit", function(e){
-             console.log("Event:", e);
-             //debugger
-             //console.log( e.target)
-             e.preventDefault();
-             let answer = document.querySelector("#user-answer").value;
-             //let answerField = document.querySelector("#user-answer");
-             //debugger
-             //console.log(e.target["#user-answer"].value);
-             let check = question.checkAnswer(answer);
-             if(check){
-                 // render answer green
-                 let answerField = document.querySelector("#user-answer");
-                 answerField.classList.add("green");
-                 // render answer green
-                 //find currentGame
-                 //debugger
-                 updateCurrentGame();                 
-             } else {
-                 answerField.classList.add("red");
-                 //render answer red                
-             }
-            
-             //if  new Game(JSON.parse(window.localStorage.currentGame)) game.complete === false {}
-            addEventListenerOnPlus();
-            addEventListenerOnMinus();
-            addEventListenerOnTimes();
-            addEventListenerOnDivide();
-         })
+         check.addEventListener("submit", function checking(e){
+            console.log("Event:", e);
+            //debugger
+            //console.log( e.target)
+            e.preventDefault();
+            let answer = document.querySelector("#user-answer").value;
+            //let answerField = document.querySelector("#user-answer");
+            //debugger
+            //console.log(e.target["#user-answer"].value);
+            let check = question.checkAnswer(answer);
+            if(check){
+                // render answer green
+                let answerField = document.querySelector("#user-answer");
+                answerField.classList.add("green");
+                // render answer green
+                //find currentGame
+                //debugger
+                updateCurrentGame();                 
+            } else {
+                answerField.classList.add("red");
+                //render answer red                
+            }           
+            //if  new Game(JSON.parse(window.localStorage.currentGame)) game.complete === false {}
+           addEventListenerOnPlus();
+           addEventListenerOnMinus();
+           addEventListenerOnTimes();
+           addEventListenerOnDivide();
+        })
+         let answerField = document.querySelector("#user-answer");
+         //debugger
+         //if(answerField.classList.contains("green")){
+           // check.removeEventListener("submit", checking, true) 
+         //}
         }
 //}
 
@@ -357,8 +359,6 @@ function submitSignUp(){
             //render username
             console.log("user:", user)
             Game.displayGame();
-            
-            displayWhoIsPlaying();
         })
         .catch(error => console.error('Error:', error))
 
@@ -373,6 +373,7 @@ function submitSignUp(){
         //console.log(userName);
         //document.querySelector(".first-view").innerHTML = ""
         renderOperatorButtons();
+        displayWhoIsPlaying();
         //render log out button 
         displayLogoutButton();
 
@@ -428,12 +429,12 @@ function submitLogIn(){
             window.localStorage.setItem("userToken", myjson.token)
             window.localStorage.setItem("currentUser", JSON.stringify(nu));
             window.localStorage.setItem("currentGame", JSON.stringify(ng));
-            console.log()
+            //console.log()
             //user = new User(myjson.data)
             //create new game or find game with id, points, stars, complete, user_id
             
             Game.displayGame();
-            displayWhoIsPlaying();
+            //displayWhoIsPlaying();
             displayUsersGames();
             }else if(myjson.errors){
                 let error = myjson.errors.message
@@ -446,6 +447,7 @@ function submitLogIn(){
         })
         if(window.localStorage.currentUser){
             renderOperatorButtons();
+            displayWhoIsPlaying();
             displayLogoutButton();
         //displayUsersGames();
         }

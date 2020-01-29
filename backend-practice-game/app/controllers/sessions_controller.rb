@@ -9,8 +9,12 @@ class SessionsController < ApplicationController
             token = Auth.create_token({username: user.username, id: user.id})
             #binding.pry
             #Game.where(complete: false)
-            #inding.pry
+            #binding.pry
             incomplete_game = user.games.incomplete_game[0]
+            if incomplete_game == nil
+                incomplete_game = user.games.create(points:0, stars:0, complete: false)
+            end
+
             #binding.pry
             #render json: { user: {id: user.id, username: user.username}, incomplete_game: incomplete_game, token: Auth.create_token({ username: user.username, id: user.id}) }
             render json: { user: UserSerializer.new(user), game: GameSerializer.new(incomplete_game), token: token }
