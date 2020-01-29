@@ -100,6 +100,7 @@ function updateCurrentGame(answerField){
         .catch((error) => console.error("Error:", error))
         //send fetch request and update localStorage.currentGame
         //update points and stars on right column
+        
         let gameDiv = document.querySelector(".current-game");
         gameDiv.innerHTML = `
         <h3>Points: ${points}</h3>
@@ -142,10 +143,10 @@ function updateCurrentGame(answerField){
 }
 
 function addEventListenerOnCheck(question){
-    let check = document.querySelector("form");
+    let checking = document.querySelector("form");
     //let answerField = document.querySelector("user-answer")
     //if(!answerField.classList.contains("green")){
-         check.addEventListener("submit", function checking(e){
+         checking.addEventListener("submit", function checking(e){
             console.log("Event:", e);
             //debugger
             //console.log( e.target)
@@ -154,18 +155,30 @@ function addEventListenerOnCheck(question){
             //let answerField = document.querySelector("#user-answer");
             //debugger
             //console.log(e.target["#user-answer"].value);
+            let answerField = document.querySelector("#user-answer");
+            if(!answerField.classList.contains("green")){
             let check = question.checkAnswer(answer);
             if(check){
                 // render answer green
-                let answerField = document.querySelector("#user-answer");
+                //let answerField = document.querySelector("#user-answer");
                 answerField.classList.add("green");
+                
                 // render answer green
-                //find currentGame
+        
                 //debugger
-                updateCurrentGame();                 
+                updateCurrentGame(); 
+                //listen for change
+                answerField.addEventListener("input", function(e){
+                    console.log(e, e.target)
+                    answerField.classList.remove("green")
+                })                
             } else {
                 answerField.classList.add("red");
-                //render answer red                
+                //render answer red 
+                answerField.addEventListener("input", function(e){    
+                    answerField.classList.remove("red")   
+                }) 
+            }       
             }           
             //if  new Game(JSON.parse(window.localStorage.currentGame)) game.complete === false {}
            addEventListenerOnPlus();
