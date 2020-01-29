@@ -16,6 +16,7 @@ class Game {
             let stars = game.stars;
             let complete = game.complete;
             let gameDiv = document.querySelector(".current-game")
+           
             let h3 = document.createElement("h3");
             h3.classList.add("current-points");
             h3.innerText = `Points: ${points}`;

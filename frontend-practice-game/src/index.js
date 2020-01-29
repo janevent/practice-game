@@ -14,7 +14,8 @@ function displayWhoIsPlaying(){
     //select div element with id="who-is-playing" and add text with username and remove hidden class
     //debugger
     let h2 = document.querySelector(".put-name-here");
-    let user = JSON.parse(window.localStorage.currentUser)
+    //debugger
+    let user = JSON.parse(window.localStorage.getItem("currentUser"))
     h2.innerHTML = ` ${user.username} is Playing`
     //container.appendChild(h2);
     //wIPDiv.innerHTML = `
@@ -42,10 +43,13 @@ function clickLogOutButton(){
             <button type="button" id="sign-up-1">Sign Up</button>
         </div>
         `
-        document.querySelector(".current-game").classList.add("hidden");
-        document.querySelector(".users-games").classList.add("hidden");
+       // document.querySelector(".current-game").classList.add("hidden");
+       document.querySelector(".current-game").innerHTML = " ";
+        //document.querySelector(".users-games").classList.add("hidden");
+        document.querySelector(".users-games").innerHTML = " ";
         logOutButton.classList.add("hidden");
-        document.querySelector(".question-form").classList.add("hidden");
+        //document.querySelector(".question-form").classList.add("hidden");
+        document.querySelector(".question-form").innerHTML = " ";
         //needs first page functionality without refreshing page
         app();
         //clickLogIn();
@@ -283,6 +287,8 @@ function displayUsersGames(){
     .then(function(myjson){ 
         console.log("userGames", myjson)
         let usersGamesDiv = document.querySelector(".users-games");
+        //debugger
+        
         let table = document.createElement("table");
         usersGamesDiv.appendChild(table);
         for(let user of myjson){
@@ -362,8 +368,8 @@ function submitSignUp(){
         })
         .catch(error => console.error('Error:', error))
 
-        let firstViewDiv = document.querySelector("#first-view");
-        firstViewDiv.classList.add("hidden");
+        //let firstViewDiv = document.querySelector("#first-view");
+        //firstViewDiv.classList.add("hidden");
         //user.id, user.username, incomplete_game.points, incomplete_games.stars, incomplete_game.id, incomplete_game.complete, incomplete_game.user_id
         //token
 
@@ -373,7 +379,7 @@ function submitSignUp(){
         //console.log(userName);
         //document.querySelector(".first-view").innerHTML = ""
         renderOperatorButtons();
-        displayWhoIsPlaying();
+        //displayWhoIsPlaying();
         //render log out button 
         displayLogoutButton();
 
@@ -445,12 +451,12 @@ function submitLogIn(){
         .catch( function(error){
             console.error('Error:', error)
         })
-        if(window.localStorage.currentUser){
+        //if(window.localStorage.currentUser){
             renderOperatorButtons();
-            displayWhoIsPlaying();
+            //displayWhoIsPlaying();
             displayLogoutButton();
         //displayUsersGames();
-        }
+        //}
        
     })
  }
