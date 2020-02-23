@@ -94,9 +94,9 @@ function updateCurrentGame(answerField){
         let gameDiv = document.querySelector(".current-game");
         gameDiv.innerHTML = `
         <h3>Points: ${points}</h3>
-        <table class="current-game-table"></table>
-                 
+        <table class="current-game-table"></table>                 
         `
+
         for(let i = 0; i < stars; i++){
             let td = document.createElement("td");
             let tr = document.createElement("tr");
@@ -106,8 +106,8 @@ function updateCurrentGame(answerField){
             td.innerHTML = `<div style="font-size: 48px; color:yellow">
             <i class="far fas star fa-2x"></i>
             <i class="far fa-star"></i></div>
-
             `
+
             if(!!complete){
                 let user = JSON.parse(window.localStorage.currentUser)
                 container.innerHTML = "";
@@ -116,6 +116,7 @@ function updateCurrentGame(answerField){
                 <br>
                 <br>
                 `
+
                 let questionForm = document.querySelector(".question-form");
                 questionForm.classList.add("hidden");
                 let ug = document.querySelector(".users-games");
@@ -246,7 +247,6 @@ function displayUsersGames(){
             "Authorization": `Bearer ${userToken}`
         }
     })
-    //send with Authorization[:header] = `bearer, ${token}`
     .then(function(response){ return response.json()})
     .then(function(myjson){ 
         console.log("userGames", myjson)
