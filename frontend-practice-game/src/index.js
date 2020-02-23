@@ -29,7 +29,6 @@ function displayWhoIsPlaying(){
 function clickLogOutButton(){
     let logOutButton = document.getElementById("logout-button");
     logOutButton.addEventListener("click", function(e){
-        //e.preventDefault();
         window.localStorage.removeItem("userToken");
         window.localStorage.removeItem("currentUser");
         window.localStorage.removeItem("currentGame");
@@ -43,17 +42,11 @@ function clickLogOutButton(){
             <button type="button" id="sign-up-1">Sign Up</button>
         </div>
         `
-       // document.querySelector(".current-game").classList.add("hidden");
-       document.querySelector(".current-game").innerHTML = " ";
-        //document.querySelector(".users-games").classList.add("hidden");
+        document.querySelector(".current-game").innerHTML = " ";
         document.querySelector(".users-games").innerHTML = " ";
         logOutButton.classList.add("hidden");
-        //document.querySelector(".question-form").classList.add("hidden");
         document.querySelector(".question-form").innerHTML = " ";
-        //needs first page functionality without refreshing page
         app();
-        //clickLogIn();
-        //clickSignUp();
     })
 }
 
@@ -76,9 +69,6 @@ function updateCurrentGame(answerField){
     let userId = cGame.userId;
     let game = new Game(id, points, stars, complete, userId)
     window.localStorage.setItem("currentGame", JSON.stringify(game))
-    //let newPoints = points + 1
-    //stars = Math.floor(newPoints/10)
-    //can it be update?
     let token = window.localStorage.userToken
         let updateGameConfig = {
             method: "PATCH",
@@ -126,46 +116,29 @@ function updateCurrentGame(answerField){
                 <br>
                 <br>
                 `
-                //<button type="button" id="new-game">New Game</button>
-                
                 let questionForm = document.querySelector(".question-form");
                 questionForm.classList.add("hidden");
-                //let name = document.querySelector(".put-name-here");
-                //name.classList.add("hidden");
                 let ug = document.querySelector(".users-games");
                 ug.classList.add("hidden");
                 let cg = document.querySelector(".current-game");
                 cg.classList.add("hidden");
-               // Game.clickNewGameButton();
-                
             }
         }
 }
 
 function addEventListenerOnCheck(question){
     let checking = document.querySelector("form");
-    //let answerField = document.querySelector("user-answer")
-    //if(!answerField.classList.contains("green")){
          checking.addEventListener("submit", function checking(e){
             console.log("Event:", e);
-            //debugger
-            //console.log( e.target)
             e.preventDefault();
             let answer = document.querySelector("#user-answer").value;
-            //let answerField = document.querySelector("#user-answer");
-            //debugger
-            //console.log(e.target["#user-answer"].value);
             let answerField = document.querySelector("#user-answer");
             if(!answerField.classList.contains("green")){
             let check = question.checkAnswer(answer);
             if(check){
                 // render answer green
-                //let answerField = document.querySelector("#user-answer");
                 answerField.classList.add("green");
-                
                 // render answer green
-        
-                //debugger
                 updateCurrentGame(); 
                 //listen for change
                 answerField.addEventListener("input", function(e){
@@ -180,49 +153,37 @@ function addEventListenerOnCheck(question){
                 }) 
             }       
             }           
-            //if  new Game(JSON.parse(window.localStorage.currentGame)) game.complete === false {}
            addEventListenerOnPlus();
            addEventListenerOnMinus();
            addEventListenerOnTimes();
            addEventListenerOnDivide();
         })
          let answerField = document.querySelector("#user-answer");
-         //debugger
-         //if(answerField.classList.contains("green")){
-           // check.removeEventListener("submit", checking, true) 
-         //}
         }
-//}
 
 function addEventListenerOnDivide(){
     let dOB = document.getElementById("divide-operator-button");
     dOB.addEventListener("click", function(e){
-        //debugger
         let divisionQuestionsArray = DivQuestions.generateDivQuestions();
         let randomNum = Math.floor(Math.random() * divisionQuestionsArray.length);
         let divisionQuestion = divisionQuestionsArray[randomNum]
         console.log("divques:", divisionQuestion)
         divisionQuestion.renderQues();
-        let answerField = document.querySelector("#user-answer");
-        //debugger    
+        let answerField = document.querySelector("#user-answer");   
         addEventListenerOnCheck(divisionQuestion);       
     })
-
 }
 
 function addEventListenerOnPlus(){
     let pOB = document.getElementById("plus-operator-button");
     pOB.addEventListener("click", function(e){
-        //let fN = Math.float(random(0) + 1);
          let num1 = Math.floor(Math.random() * 100) + 1;
          let num2 = Math.floor(Math.random() * 100) + 1;
          let operator = " + ";
          let additionQuestion = new Question(num1, operator, num2);
          additionQuestion.renderQues();
-         //debugger
          addEventListenerOnCheck(additionQuestion);
     })
-
 }
 
 function addEventListenerOnMinus(){
@@ -250,15 +211,9 @@ function addEventListenerOnTimes(){
 }
 
 function renderOperatorButtons(){
-   // let container = document.querySelector(".first-view");
-    //container.innerHTML = "";
-    //debugger
-    //let u = JSON.parse(window.localStorage.currentUser)
-    //why does it sometimes work and sometimes not?
     container.innerHTML =   `
         <h2 class="put-name-here"></h2>
-        <br>
-    
+        <br>   
         <br>
         <button type="button" id="plus-operator-button"><i class="fas fa-plus"></i></button>
         <button type="button" id="minus-operator-button"><i class="fas fa-minus"></i></button>
@@ -272,12 +227,8 @@ function renderOperatorButtons(){
     addEventListenerOnMinus();
     addEventListenerOnTimes();
     addEventListenerOnDivide();
-
 }
 
-//remove hidden class on logout button.
-//put an eventlistener on logout button that will send a delete request
-//how do I keep track of current user? and submit userToken with fetch?
 function displayLogoutButton(){
     let logoutButton = document.getElementById("logout-button");
     logoutButton.classList.remove("hidden");
@@ -299,9 +250,7 @@ function displayUsersGames(){
     .then(function(response){ return response.json()})
     .then(function(myjson){ 
         console.log("userGames", myjson)
-        let usersGamesDiv = document.querySelector(".users-games");
-        //debugger
-        
+        let usersGamesDiv = document.querySelector(".users-games");        
         let table = document.createElement("table");
         usersGamesDiv.appendChild(table);
         for(let user of myjson){
@@ -309,13 +258,6 @@ function displayUsersGames(){
             tr.innerHTML = `<td>${user} game/s won<td>`
             table.appendChild(tr);
         }
-        //let values = Object.values(myjson);
-        //for(let v of values){
-            //let li = document.createElement("li");
-            //li.innerHTML = `${v} game/s complete`
-        //}
-    //create ul and append it to log out container
-    //create li element for each user and give it the innerHTML of user: numm games complete
     })
     .catch((error) => console.error("Error:", error))
 }

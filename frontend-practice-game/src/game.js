@@ -34,12 +34,7 @@ class Game {
                 tr.appendChild(td);
                 table.appendChild(tr);
             }
-            //create currentGame table on right side of screen
-            //Points: 50
-            // *      * etc.
-            //if complete say Won or explosion of stars
         } 
-
     }
 
     static clickNewGameButton(){
