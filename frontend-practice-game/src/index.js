@@ -322,84 +322,48 @@ function displayUsersGames(){
 
 function submitSignUp(){
     let signUpSubmitB = document.getElementById("sign-up-submit");
-    //debugger
     if(!!signUpSubmitB){
         //debugger
     signUpSubmitB.addEventListener("click", function(e){
-        //debugger
         //create configurationObject 
         let nameInput = document.getElementById("sign-up-name");
         let userName = nameInput.value;
-        //debugger
         let passwordInput = document.getElementById("sign-up-password");
         let userPassword = passwordInput.value;
-        //let user = new User(userName, userPassword)
         let configurationObject = {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
-                //"Accept": "application/json"
               },
             body: JSON.stringify({
                 username: userName,
                 password: userPassword
               })
         }
-        //debugger
+
         //post fetch request
         fetch(signUpURL, configurationObject)
         .then((response) => {
-            
-            //debugger
             console.log('Response:', response)
             return response.json()
         })
         .then((myjson) => {
-            //debugger
             console.log('Success:', JSON.stringify(myjson))
-            window.localStorage.setItem('userToken', myjson.token)
-            
+            window.localStorage.setItem('userToken', myjson.token)            
             let user = new User(myjson.user.data.attributes.username, myjson.user.data.attributes.id)
-            //debugger
+
             let incompleteGame = new Game(myjson.user.included[0].attributes.id, myjson.user.included[0].attributes.points, myjson.user.included[0].attributes.stars, myjson.user.included[0].attributes.complete, myjson.user.included[0].attributes.user_id)
-            //debugger
             window.localStorage.setItem('currentGame', JSON.stringify(incompleteGame));
             window.localStorage.setItem('currentUser', JSON.stringify(user))
-
-            //debugger
-            //document.querySelector(".first-view").innerHTML = "";
-            //displayWhoIsPlaying(user);
-            //renderOperatorButtons();
-
             //get the data of the user. create new user with the username, id attributes and new game with points, stars, status and id attributes
-            //set token with in window.localStorage to  myjson.data.token
-            //window.localStorage.setItem(myjson.data.token)
-            //render game info on right panel
-            //render username
             console.log("user:", user)
             Game.displayGame();
         })
         .catch(error => console.error('Error:', error))
 
-        //let firstViewDiv = document.querySelector("#first-view");
-        //firstViewDiv.classList.add("hidden");
-        //user.id, user.username, incomplete_game.points, incomplete_games.stars, incomplete_game.id, incomplete_game.complete, incomplete_game.user_id
-        //token
-
-        //console.log("user:", user)
-
-
-        //console.log(userName);
-        //document.querySelector(".first-view").innerHTML = ""
-        renderOperatorButtons();
-        //displayWhoIsPlaying();
-        //render log out button 
+        renderOperatorButtons(); 
         displayLogoutButton();
-
         displayUsersGames();
-
-        //Game.displayGame();
-        
     })
     }
 }
@@ -407,18 +371,13 @@ function submitSignUp(){
 function submitLogIn(){
     let logInSubmitB = document.getElementById("log-in-submit");
     logInSubmitB.addEventListener("click", function(e){
-        //debugger
-        //pass in e or not
         let nameInput = document.getElementById("log-in-name").value;
         let passwordInput = document.getElementById("log-in-password").value;
-
-
         let logInObject = {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Accept": "application/json"
-                
+                "Accept": "application/json"                
             },
             body: JSON.stringify({
                 username: nameInput,
@@ -426,13 +385,10 @@ function submitLogIn(){
             })
         };
         e.preventDefault();
-        //debugger
-
         fetch(logInURL, logInObject)
         .then( response => response.json())
         .then( function(myjson){
             console.log("Success: ", myjson)
-            //create new user or find user with username and user id from myjson object
             if(myjson.user){
             let game = myjson.game.data.attributes;
             let gameId = game.id;
@@ -448,12 +404,7 @@ function submitLogIn(){
             window.localStorage.setItem("userToken", myjson.token)
             window.localStorage.setItem("currentUser", JSON.stringify(nu));
             window.localStorage.setItem("currentGame", JSON.stringify(ng));
-            //console.log()
-            //user = new User(myjson.data)
-            //create new game or find game with id, points, stars, complete, user_id
-            
             Game.displayGame();
-            //displayWhoIsPlaying();
             displayUsersGames();
             }else if(myjson.errors){
                 let error = myjson.errors.message
@@ -464,13 +415,8 @@ function submitLogIn(){
         .catch( function(error){
             console.error('Error:', error)
         })
-        //if(window.localStorage.currentUser){
             renderOperatorButtons();
-            //displayWhoIsPlaying();
-            displayLogoutButton();
-        //displayUsersGames();
-        //}
-       
+            displayLogoutButton();       
     })
  }
 
@@ -478,9 +424,6 @@ function clickLogIn (){
     let logInButton = document.getElementById("log-in-1");
     logInButton.addEventListener("click", function(e){
         console.log(e);
-        //firstViewDiv.classList.add("hidden");
-        //let logInDiv = document.createElement("div");
-        //logInDiv.classList.add("form");
         container.innerHTML = `<form id="log-in-form">Name:<br>
         <input type="text" name="name" id="log-in-name"><br>
         password: <br>
@@ -488,7 +431,6 @@ function clickLogIn (){
         <br>
         <input type="submit" id="log-in-submit" value="Submit">
         </form>`
-        //container.appendChild(logInDiv);
         submitLogIn();
     })
 }
@@ -497,9 +439,6 @@ function clickSignUp(){
     let signUpButton = document.getElementById("sign-up-1");
     signUpButton.addEventListener("click", function(e){
         console.log(e);
-        //firstViewDiv.classList.add("hidden");
-        //let signUpDiv = document.createElement("div");
-        //signUpDiv.classList.add("form");
         container.innerHTML = `<form id="sign-up-form">Name:<br>
         <input type="text" name="name" id="sign-up-name"><br>
         password: <br>
@@ -507,17 +446,9 @@ function clickSignUp(){
         <br>
         <input type="submit" id="sign-up-submit" value="Submit">
         </form>`
-        //container.appendChild(signUpDiv);
-        submitSignUp();
-        
+        submitSignUp();       
     })
-
 }
-
-//window.localStorage.setItem('token')
-//passed through header authorization: token
-
-
 
 clickLogIn();
 clickSignUp();
