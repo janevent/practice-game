@@ -23,14 +23,24 @@ class UsersController < ApplicationController
     end
 
     def show 
-        token = headers["Authorization"].split(" ").last
-        Auth.decode_token(token)
+        token = request.env["HTTP_AUTHORIZATION"].split(" ").last
+        if token && Auth.decode_token(token)
+            user = User.find_by(id: params[:id])
+            options = {
+                include: [:games]
+            }
+            if user 
+                render json: UserSerializer.new(user, options)
+            else
+                render json: {errors: "That is not a user"}, status: 500
+            end
+        end
+
     end
 
     def index
+        token = request.env["HTTP_AUTHORIZATION"].split(" ").last
         users = User.all 
-        #does games need to be in an array?
-        #get just the complete games or number of complete games
         complete_users = [];
         users.each do |user|
             complete_users << " #{user.username}:   #{user.games.complete_games.length}" 

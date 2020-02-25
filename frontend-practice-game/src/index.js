@@ -15,8 +15,39 @@ function displayWhoIsPlaying(){
     //debugger
     let h2 = document.querySelector(".put-name-here");
     //debugger
-    let user = JSON.parse(window.localStorage.getItem("currentUser"))
-    h2.innerHTML = ` ${user.username} is Playing`
+    let user = JSON.parse(window.localStorage.getItem("currentUser"));
+    console.log("user-id:", user.id);
+    console.log("url:", configURL)
+    let token = window.localStorage.userToken;
+    let configUser = {
+        method: "GET",
+        headers: {
+            "Content-type": "application/json",
+            "Authorization": `Bearer ${token}`
+        }
+    }
+    fetch(`${configURL}users/${user.id}`, configUser)
+    .then(response => response.json())
+    .then((myjson) => {
+        console.log(myjson)
+        h2.innerHTML = `
+        ${myjson.data.attributes.username}
+        `
+        let completeGames = 0;
+        let incompleteGames = 0;
+        for(game of myjson.included){
+            console.log("game:", game)
+            if(game.attributes.complete === true){
+                completeGames = completeGames + 1;
+            }else if(game.attributes.complete === false){
+                incompleteGames = incompleteGames + 1;
+            }
+        }
+        h2.innerHTML = `
+        ${myjson.data.attributes.username} is working on ${incompleteGames} and has Won ${completeGames}!
+        `
+    })
+    //h2.innerHTML = ` ${user.username} is Playing`
     //container.appendChild(h2);
     //wIPDiv.innerHTML = `
       //  <h2> ${user.username} is Playing </h2>
@@ -236,10 +267,9 @@ function displayLogoutButton(){
     clickLogOutButton(); 
 }
 
-
-
 function displayUsersGames(){
     let userToken = window.localStorage.getItem('userToken');
+    //debugger
     fetch(usersURL, {
         method: "GET",
         headers: {
@@ -300,6 +330,9 @@ function submitSignUp(){
             //get the data of the user. create new user with the username, id attributes and new game with points, stars, status and id attributes
             console.log("user:", user)
             Game.displayGame();
+            renderOperatorButtons();
+            displayWhoIsPlaying();
+
         })
         .catch(error => console.error('Error:', error))
 
@@ -348,6 +381,8 @@ function submitLogIn(){
             window.localStorage.setItem("currentGame", JSON.stringify(ng));
             Game.displayGame();
             displayUsersGames();
+            renderOperatorButtons();
+            displayWhoIsPlaying();
             }else if(myjson.errors){
                 let error = myjson.errors.message
                 container.innerHTML = `${error}`
@@ -357,7 +392,7 @@ function submitLogIn(){
         .catch( function(error){
             console.error('Error:', error)
         })
-            renderOperatorButtons();
+            //renderOperatorButtons();
             displayLogoutButton();       
     })
  }
