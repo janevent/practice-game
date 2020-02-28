@@ -78,6 +78,7 @@ function clickLogOutButton(){
         qf.innerHTML = " ";
         qf.removeAttribute("game-id");
         Game.clear;
+        User.clear;
         app();
     })
 }
@@ -225,7 +226,11 @@ function submitSignUp(){
             window.localStorage.setItem('userToken', myjson.token)            
             let user = new User(myjson.user.data.attributes.username, myjson.user.data.attributes.id)
 
-            let incompleteGame = new Game(myjson.user.included[0].attributes.id, myjson.user.included[0].attributes.points, myjson.user.included[0].attributes.stars, myjson.user.included[0].attributes.complete, myjson.user.included[0].attributes.user_id)
+            let incompleteGame = new Game(myjson.user.included[0].attributes.id, myjson.user.included[0].attributes.points, myjson.user.included[0].attributes.stars, myjson.user.included[0].attributes.complete, myjson.user.included[0].attributes.user_id);
+
+            let questionForm = document.querySelector(".question-form");
+            questionForm.setAttribute("game-id", incompleteGame.id);
+
             window.localStorage.setItem('currentGame', JSON.stringify(incompleteGame));
             window.localStorage.setItem('currentUser', JSON.stringify(user))
             //get the data of the user. create new user with the username, id attributes and new game with points, stars, status and id attributes
@@ -277,9 +282,13 @@ function submitLogIn(){
                 let userId = user.id;
                 let username = user.username;
                 let nu = new User(username, userId)
+
+                //debugger
+
                 window.localStorage.setItem("userToken", myjson.token)
                 let questionForm = document.querySelector(".question-form");
-                questionForm.setAttribute("game-id", gameId)
+                questionForm.setAttribute("game-id", gameId);
+
                 window.localStorage.setItem("currentUser", JSON.stringify(nu));
                 window.localStorage.setItem("currentGame", JSON.stringify(ng));
                 Game.displayGame();//change to not static and use the instance of game

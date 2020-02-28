@@ -31,7 +31,7 @@ class Game {
     static displayGame(){
         //let game = JSON.parse(window.localStorage.currentGame);
         let game = Game.find();
-        debugger
+        //debugger
         if(!!game){
             let points = game.points;
             let stars = game.stars;
