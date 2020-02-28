@@ -30,9 +30,7 @@ function displayWhoIsPlaying(){
     .then(response => response.json())
     .then((myjson) => {
         console.log(myjson)
-        h2.innerHTML = `
-        ${myjson.data.attributes.username}
-        `
+        
         let completeGames = 0;
         let incompleteGames = 0;
         for(game of myjson.included){
@@ -81,82 +79,7 @@ function clickLogOutButton(){
     })
 }
 
-function updateCurrentGame(answerField){
-    let cg = window.localStorage.currentGame
-    console.log("current game:", cg);
-    console.log("parsed game:", JSON.parse(cg))
-    let cGame = JSON.parse(cg)
-    let id = cGame.id;
-    let points = cGame.points;
-    points += 1;
-    //increment points by one
-    let stars = cGame.stars;
-    stars = Math.floor(points/10);
-    //update stars;
-    let complete = cGame.complete;
-    if(points== 100){
-        complete = true;
-    }
-    let userId = cGame.userId;
-    let game = new Game(id, points, stars, complete, userId)
-    window.localStorage.setItem("currentGame", JSON.stringify(game))
-    let token = window.localStorage.userToken
-        let updateGameConfig = {
-            method: "PATCH",
-            headers: {
-                "Content-type": "application/json",
-                "Authorization": `Bearer ${token}` 
-            },
-            body: JSON.stringify({
-                id: id,
-                points: points,
-                stars: stars,
-                complete: complete,
-                user_id: userId
-            })
-        }
-        fetch(updateGameURL, updateGameConfig)
-        .then( (response) => response.json() )
-        .then((myJson) => console.log("Success:", myJson))
-        .catch((error) => console.error("Error:", error))
-        //send fetch request and update localStorage.currentGame
-        //update points and stars on right column
-        
-        let gameDiv = document.querySelector(".current-game");
-        gameDiv.innerHTML = `
-        <h3>Points: ${points}</h3>
-        <table class="current-game-table"></table>                 
-        `
 
-        for(let i = 0; i < stars; i++){
-            let td = document.createElement("td");
-            let tr = document.createElement("tr");
-            tr.appendChild(td);
-            let table = document.querySelector(".current-game-table");
-            table.appendChild(tr);
-            td.innerHTML = `<div style="font-size: 48px; color:yellow">
-            <i class="far fas star fa-2x"></i>
-            <i class="far fa-star"></i></div>
-            `
-
-            if(!!complete){
-                let user = JSON.parse(window.localStorage.currentUser)
-                container.innerHTML = "";
-                container.innerHTML = `
-                <h1>Congratulations ${user.username}!! You Won!! </h1>
-                <br>
-                <br>
-                `
-
-                let questionForm = document.querySelector(".question-form");
-                questionForm.classList.add("hidden");
-                let ug = document.querySelector(".users-games");
-                ug.classList.add("hidden");
-                let cg = document.querySelector(".current-game");
-                cg.classList.add("hidden");
-            }
-        }
-}
 
 function addEventListenerOnCheck(question){
     let checking = document.querySelector("form");
@@ -171,7 +94,7 @@ function addEventListenerOnCheck(question){
                 // render answer green
                 answerField.classList.add("green");
                 // render answer green
-                updateCurrentGame(); 
+                Game.updateCurrentGame(); 
                 //listen for change
                 answerField.addEventListener("input", function(e){
                     console.log(e, e.target)
@@ -365,24 +288,26 @@ function submitLogIn(){
         .then( function(myjson){
             console.log("Success: ", myjson)
             if(myjson.user){
-            let game = myjson.game.data.attributes;
-            let gameId = game.id;
-            let gameComplete = game.complete;
-            let gamePoints = game.points;
-            let gameStars = game.stars;
-            let gameUserId = game.user_id
-            let ng = new Game(gameId, gamePoints, gameStars, gameComplete, gameUserId);
-            let user = myjson.user.data.attributes;
-            let userId = user.id;
-            let username = user.username;
-            let nu = new User(username, userId)
-            window.localStorage.setItem("userToken", myjson.token)
-            window.localStorage.setItem("currentUser", JSON.stringify(nu));
-            window.localStorage.setItem("currentGame", JSON.stringify(ng));
-            Game.displayGame();
-            displayUsersGames();
-            renderOperatorButtons();
-            displayWhoIsPlaying();
+                let game = myjson.game.data.attributes;
+                let gameId = game.id;
+                let gameComplete = game.complete;
+                let gamePoints = game.points;
+                let gameStars = game.stars;
+                let gameUserId = game.user_id
+                let ng = new Game(gameId, gamePoints, gameStars, gameComplete, gameUserId);
+                let user = myjson.user.data.attributes;
+                let userId = user.id;
+                let username = user.username;
+                let nu = new User(username, userId)
+                window.localStorage.setItem("userToken", myjson.token)
+                let questionForm = document.querySelector(".question-form");
+                questionForm.setAttribute("game-id", gameId)
+                window.localStorage.setItem("currentUser", JSON.stringify(nu));
+                window.localStorage.setItem("currentGame", JSON.stringify(ng));
+                Game.displayGame();//change to not static and use the instance of game
+                displayUsersGames();
+                renderOperatorButtons();
+                displayWhoIsPlaying();// instance method
             }else if(myjson.errors){
                 let error = myjson.errors.message
                 container.innerHTML = `${error}`
@@ -408,6 +333,7 @@ function clickLogIn (){
         <br>
         <input type="submit" id="log-in-submit" value="Submit">
         </form>`
+        //debugger
         submitLogIn();
     })
 }

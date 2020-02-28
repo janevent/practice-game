@@ -1,16 +1,37 @@
 class Game {
+    //allgames = [];
 
     constructor(id, points, stars, complete, userId){
         this.id = id,
         this.points = points,
         this.stars = stars,
-        this.complete = complete,
+        this.complete = complete,      
         this.userId = userId
+        this.save;        
+    }
+
+    get save(){
+        Game.allgames.push(this)
+    }
+
+    static find(){
+        //let user = JSON.parse(window.localStorage.currentUser);
+        let questionForm = document.querySelector(".question-form");
+        let gameId = questionForm.getAttribute("game-id");
+        return Game.allgames.find(function(game){
+            return game.id === parseInt(gameId);
+            //return game.userId === user.id && game.complete === false
+        })
+    }
+
+    static get clear(){
+        Game.allgames = [];
     }
 
     static displayGame(){
-        let game = JSON.parse(window.localStorage.currentGame);
-        //debugger
+        //let game = JSON.parse(window.localStorage.currentGame);
+        let game = Game.find();
+        debugger
         if(!!game){
             let points = game.points;
             let stars = game.stars;
@@ -36,4 +57,80 @@ class Game {
             }
         } 
     }
+
+    static updateCurrentGame(){
+        let game = Game.find();
+        let id = game.id;
+        let points = game.points;
+        points += 1;
+        //increment points by one
+        let stars = game.stars;
+        stars = Math.floor(points/10);
+        //update stars;
+        let complete = game.complete;
+        if(points== 100){
+            complete = true;
+        }
+        let userId = game.userId;
+        window.localStorage.setItem("currentGame", JSON.stringify(game))
+        let token = window.localStorage.userToken
+            let updateGameConfig = {
+                method: "PATCH",
+                headers: {
+                    "Content-type": "application/json",
+                    "Authorization": `Bearer ${token}` 
+                },
+                body: JSON.stringify({
+                    id: id,
+                    points: points,
+                    stars: stars,
+                    complete: complete,
+                    user_id: userId
+                })
+            }
+            fetch(updateGameURL, updateGameConfig)
+            .then( (response) => response.json() )
+            .then((myJson) => console.log("Success:", myJson))
+            .catch((error) => console.error("Error:", error))
+            //send fetch request and update localStorage.currentGame
+            //update points and stars on right column
+            
+            let gameDiv = document.querySelector(".current-game");
+            gameDiv.innerHTML = `
+            <h3>Points: ${points}</h3>
+            <table class="current-game-table"></table>                 
+            `
+    
+            for(let i = 0; i < stars; i++){
+                let td = document.createElement("td");
+                let tr = document.createElement("tr");
+                tr.appendChild(td);
+                let table = document.querySelector(".current-game-table");
+                table.appendChild(tr);
+                td.innerHTML = `<div style="font-size: 48px; color:yellow">
+                <i class="far fas star fa-2x"></i>
+                <i class="far fa-star"></i></div>
+                `
+    
+                if(!!complete){
+                    let user = JSON.parse(window.localStorage.currentUser)
+                    container.innerHTML = "";
+                    container.innerHTML = `
+                    <h1>Congratulations ${user.username}!! You Won!! </h1>
+                    <br>
+                    <br>
+                    `
+    
+                    let questionForm = document.querySelector(".question-form");
+                    questionForm.classList.add("hidden");
+                    let ug = document.querySelector(".users-games");
+                    ug.classList.add("hidden");
+                    let cg = document.querySelector(".current-game");
+                    cg.classList.add("hidden");
+                }
+            }
+    }
+     
 }
+
+Game.allgames = [];
