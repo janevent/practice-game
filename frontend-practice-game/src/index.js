@@ -74,7 +74,10 @@ function clickLogOutButton(){
         document.querySelector(".current-game").innerHTML = " ";
         document.querySelector(".users-games").innerHTML = " ";
         logOutButton.classList.add("hidden");
-        document.querySelector(".question-form").innerHTML = " ";
+        let qf = document.querySelector(".question-form")
+        qf.innerHTML = " ";
+        qf.removeAttribute("game-id");
+        Game.clear;
         app();
     })
 }
@@ -190,31 +193,6 @@ function displayLogoutButton(){
     clickLogOutButton(); 
 }
 
-function displayUsersGames(){
-    let userToken = window.localStorage.getItem('userToken');
-    //debugger
-    fetch(usersURL, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${userToken}`
-        }
-    })
-    .then(function(response){ return response.json()})
-    .then(function(myjson){ 
-        console.log("userGames", myjson)
-        let usersGamesDiv = document.querySelector(".users-games");        
-        let table = document.createElement("table");
-        usersGamesDiv.appendChild(table);
-        for(let user of myjson){
-            let tr = document.createElement("tr");
-            tr.innerHTML = `<td>${user} game/s won<td>`
-            table.appendChild(tr);
-        }
-    })
-    .catch((error) => console.error("Error:", error))
-}
-
 function submitSignUp(){
     let signUpSubmitB = document.getElementById("sign-up-submit");
     if(!!signUpSubmitB){
@@ -259,9 +237,9 @@ function submitSignUp(){
         })
         .catch(error => console.error('Error:', error))
 
-        renderOperatorButtons(); 
+        //renderOperatorButtons(); 
         displayLogoutButton();
-        displayUsersGames();
+        Game.displayUsersGames();
     })
     }
 }
@@ -305,7 +283,7 @@ function submitLogIn(){
                 window.localStorage.setItem("currentUser", JSON.stringify(nu));
                 window.localStorage.setItem("currentGame", JSON.stringify(ng));
                 Game.displayGame();//change to not static and use the instance of game
-                displayUsersGames();
+                Game.displayUsersGames();
                 renderOperatorButtons();
                 displayWhoIsPlaying();// instance method
             }else if(myjson.errors){

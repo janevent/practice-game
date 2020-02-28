@@ -130,6 +130,31 @@ class Game {
                 }
             }
     }
+
+    static displayUsersGames(){
+        let userToken = window.localStorage.getItem('userToken');
+        //debugger
+        fetch(usersURL, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${userToken}`
+            }
+        })
+        .then(function(response){ return response.json()})
+        .then(function(myjson){ 
+            console.log("userGames", myjson)
+            let usersGamesDiv = document.querySelector(".users-games");        
+            let table = document.createElement("table");
+            usersGamesDiv.appendChild(table);
+            for(let user of myjson){
+                let tr = document.createElement("tr");
+                tr.innerHTML = `<td>${user} game/s won<td>`
+                table.appendChild(tr);
+            }
+        })
+        .catch((error) => console.error("Error:", error))
+    }
      
 }
 
