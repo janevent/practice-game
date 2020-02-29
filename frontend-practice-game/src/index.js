@@ -10,49 +10,6 @@ let newGameURL = `${configURL}games/new`
 let container = document.querySelector(".first-view");
 let firstViewDiv = document.querySelector("#first-view");
 
-function displayWhoIsPlaying(){
-    //select div element with id="who-is-playing" and add text with username and remove hidden class
-    //debugger
-    let h2 = document.querySelector(".put-name-here");
-    //debugger
-    let user = JSON.parse(window.localStorage.getItem("currentUser"));
-    console.log("user-id:", user.id);
-    console.log("url:", configURL)
-    let token = window.localStorage.userToken;
-    let configUser = {
-        method: "GET",
-        headers: {
-            "Content-type": "application/json",
-            "Authorization": `Bearer ${token}`
-        }
-    }
-    fetch(`${configURL}users/${user.id}`, configUser)
-    .then(response => response.json())
-    .then((myjson) => {
-        console.log(myjson)
-        
-        let completeGames = 0;
-        let incompleteGames = 0;
-        for(game of myjson.included){
-            console.log("game:", game)
-            if(game.attributes.complete === true){
-                completeGames = completeGames + 1;
-            }else if(game.attributes.complete === false){
-                incompleteGames = incompleteGames + 1;
-            }
-        }
-        h2.innerHTML = `
-        ${myjson.data.attributes.username} is working on ${incompleteGames} and has Won ${completeGames}!
-        `
-    })
-    //h2.innerHTML = ` ${user.username} is Playing`
-    //container.appendChild(h2);
-    //wIPDiv.innerHTML = `
-      //  <h2> ${user.username} is Playing </h2>
-        //`
-    //wIPDiv.removeAttribute(".who-is-playing")   
-    //wIPDiv.classList.remove("hidde
-}
 
 
 function clickLogOutButton(){
@@ -85,108 +42,6 @@ function clickLogOutButton(){
 
 
 
-function addEventListenerOnCheck(question){
-    let checking = document.querySelector("form");
-         checking.addEventListener("submit", function checking(e){
-            console.log("Event:", e);
-            e.preventDefault();
-            let answer = document.querySelector("#user-answer").value;
-            let answerField = document.querySelector("#user-answer");
-            if(!answerField.classList.contains("green")){
-            let check = question.checkAnswer(answer);
-            if(check){
-                // render answer green
-                answerField.classList.add("green");
-                // render answer green
-                Game.updateCurrentGame(); 
-                //listen for change
-                answerField.addEventListener("input", function(e){
-                    console.log(e, e.target)
-                    answerField.classList.remove("green")
-                })                
-            } else {
-                answerField.classList.add("red");
-                //render answer red 
-                answerField.addEventListener("input", function(e){    
-                    answerField.classList.remove("red")   
-                }) 
-            }       
-            }           
-           addEventListenerOnPlus();
-           addEventListenerOnMinus();
-           addEventListenerOnTimes();
-           addEventListenerOnDivide();
-        })
-         let answerField = document.querySelector("#user-answer");
-        }
-
-function addEventListenerOnDivide(){
-    let dOB = document.getElementById("divide-operator-button");
-    dOB.addEventListener("click", function(e){
-        let divisionQuestionsArray = DivQuestions.generateDivQuestions();
-        let randomNum = Math.floor(Math.random() * divisionQuestionsArray.length);
-        let divisionQuestion = divisionQuestionsArray[randomNum]
-        console.log("divques:", divisionQuestion)
-        divisionQuestion.renderQues();
-        let answerField = document.querySelector("#user-answer");   
-        addEventListenerOnCheck(divisionQuestion);       
-    })
-}
-
-function addEventListenerOnPlus(){
-    let pOB = document.getElementById("plus-operator-button");
-    pOB.addEventListener("click", function(e){
-         let num1 = Math.floor(Math.random() * 100) + 1;
-         let num2 = Math.floor(Math.random() * 100) + 1;
-         let operator = " + ";
-         let additionQuestion = new Question(num1, operator, num2);
-         additionQuestion.renderQues();
-         addEventListenerOnCheck(additionQuestion);
-    })
-}
-
-function addEventListenerOnMinus(){
-    let mOB = document.getElementById("minus-operator-button");
-    mOB.addEventListener("click", function(e){
-        let num1 = Math.floor(Math.random() * 100) + 1;
-        let num2 = Math.floor(Math.random() * num1) + 1;
-        let operator = " - ";
-        let minusQuestion = new Question(num1, operator, num2)
-        minusQuestion.renderQues();
-        addEventListenerOnCheck(minusQuestion);
-    });
-}
-
-function addEventListenerOnTimes(){
-    let tOB = document.getElementById("times-operator-button");
-    tOB.addEventListener("click", function(e){
-        let num1 = Math.floor(Math.random() * 10) + 1;
-        let num2 = Math.floor(Math.random() * 10) + 1;
-        let operator = " * ";
-        let timesQuestion = new Question(num1, operator, num2);
-        timesQuestion.renderQues();
-        addEventListenerOnCheck(timesQuestion)
-    })
-}
-
-function renderOperatorButtons(){
-    container.innerHTML =   `
-        <h2 class="put-name-here"></h2>
-        <br>   
-        <br>
-        <button type="button" id="plus-operator-button"><i class="fas fa-plus"></i></button>
-        <button type="button" id="minus-operator-button"><i class="fas fa-minus"></i></button>
-        <button type="button" id="times-operator-button"><i class="fas fa-times"></i></button>
-        <button type="button" id="divide-operator-button"><i class="fas fa-divide"></i></button>
-        <br>
-        <br>
-        <br>
-    `;
-    addEventListenerOnPlus();
-    addEventListenerOnMinus();
-    addEventListenerOnTimes();
-    addEventListenerOnDivide();
-}
 
 function displayLogoutButton(){
     let logoutButton = document.getElementById("logout-button");
@@ -236,8 +91,8 @@ function submitSignUp(){
             //get the data of the user. create new user with the username, id attributes and new game with points, stars, status and id attributes
             console.log("user:", user)
             Game.displayGame();
-            renderOperatorButtons();
-            displayWhoIsPlaying();
+            OperatorButtons.renderOperatorButtons();
+            User.displayWhoIsPlaying();
 
         })
         .catch(error => console.error('Error:', error))
@@ -293,8 +148,8 @@ function submitLogIn(){
                 window.localStorage.setItem("currentGame", JSON.stringify(ng));
                 Game.displayGame();//change to not static and use the instance of game
                 Game.displayUsersGames();
-                renderOperatorButtons();
-                displayWhoIsPlaying();// instance method
+                OperatorButtons.renderOperatorButtons();
+                User.displayWhoIsPlaying();// instance method
             }else if(myjson.errors){
                 let error = myjson.errors.message
                 container.innerHTML = `${error}`

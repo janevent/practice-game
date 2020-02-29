@@ -60,6 +60,7 @@ class Game {
 
     static updateCurrentGame(){
         let game = Game.find();
+        debugger
         let id = game.id;
         let points = game.points;
         points += 1;
@@ -88,7 +89,7 @@ class Game {
                     user_id: userId
                 })
             }
-            fetch(updateGameURL, updateGameConfig)
+            fetch("http://localhost:3000/game", updateGameConfig)
             .then( (response) => response.json() )
             .then((myJson) => console.log("Success:", myJson))
             .catch((error) => console.error("Error:", error))
@@ -134,7 +135,7 @@ class Game {
     static displayUsersGames(){
         let userToken = window.localStorage.getItem('userToken');
         //debugger
-        fetch(usersURL, {
+        fetch("http://localhost:3000/users", {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
