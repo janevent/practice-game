@@ -25,13 +25,15 @@ class Question{
     addEventListenerOnCheck(){
         //debugger
         let checking = document.querySelector("form");
-        checking.addEventListener("submit", function checking(e){
+        checking.addEventListener("submit",(e) => {
             e.preventDefault();
-        
+            //debugger
             let answer = document.querySelector("#user-answer").value;
             let answerField = document.querySelector("#user-answer");
             if(!answerField.classList.contains("green")){
+                //debugger
                 let check = this.checkAnswer(answer);
+                console.log("check:", check)
                 if(check){
                     // render answer green
                     answerField.classList.add("green");
