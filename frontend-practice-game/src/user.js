@@ -16,11 +16,7 @@ class User {
     }
 
     static displayWhoIsPlaying(){
-        //select div element with id="who-is-playing" and add text with username and remove hidden class
-        //debugger
         let h2 = document.querySelector(".put-name-here");
-        //debugger
-        //let user = JSON.parse(window.localStorage.getItem("currentUser"));
         let user = User.user;
         let token = window.localStorage.userToken;
         let configUser = {
@@ -33,11 +29,10 @@ class User {
         fetch(`http://localhost:3000/users/${user.id}`, configUser)
         .then(response => response.json())
         .then((myjson) => {
-            console.log(myjson)
-            
+            console.log(myjson)        
             let completeGames = 0;
             let incompleteGames = 0;
-            //debugger
+            
             for(let i = 0; i < myjson.included.length; i++){
                 console.log("game:", myjson.included[i])
                 if(myjson.included[i].attributes.complete === true){
@@ -85,29 +80,21 @@ class User {
                     let userId = user.id;
                     let username = user.username;
                     let nu = new User(username, userId)
-
-                    //debugger
-
                     window.localStorage.setItem("userToken", myjson.token)
                     let questionForm = document.querySelector(".question-form");
                     questionForm.setAttribute("game-id", gameId);
-
-                    //window.localStorage.setItem("currentUser", JSON.stringify(nu));
-                    //window.localStorage.setItem("currentGame", JSON.stringify(ng));
-                    Game.displayGame();//change to not static and use the instance of game
+                    Game.displayGame();
                     Game.displayUsersGames();
                     OperatorButtons.renderOperatorButtons();
-                    User.displayWhoIsPlaying();// instance method
+                    User.displayWhoIsPlaying();
                 }else if(myjson.errors){
                     let error = myjson.errors.message
                     container.innerHTML = `${error}`
                 }
-
             })
             .catch( function(error){
                 console.error('Error:', error)
             })
-                //renderOperatorButtons();
                 App.displayLogoutButton();       
         })
     }
@@ -115,9 +102,7 @@ class User {
     static submitSignUp(){
         let signUpSubmitB = document.getElementById("sign-up-submit");
         if(!!signUpSubmitB){
-            //debugger
         signUpSubmitB.addEventListener("click", function(e){
-            //create configurationObject 
             let nameInput = document.getElementById("sign-up-name");
             let userName = nameInput.value;
             let passwordInput = document.getElementById("sign-up-password");
@@ -132,7 +117,6 @@ class User {
                     password: userPassword
                 })
             }
-
             //post fetch request
             fetch("http://localhost:3000/signup", configurationObject)
             .then((response) => {
@@ -148,10 +132,6 @@ class User {
 
                 let questionForm = document.querySelector(".question-form");
                 questionForm.setAttribute("game-id", incompleteGame.id);
-
-                //window.localStorage.setItem('currentGame', JSON.stringify(incompleteGame));
-                //window.localStorage.setItem('currentUser', JSON.stringify(user))
-                //get the data of the user. create new user with the username, id attributes and new game with points, stars, status and id attributes
                 console.log("user:", user)
                 Game.displayGame();
                 OperatorButtons.renderOperatorButtons();
@@ -159,8 +139,6 @@ class User {
 
             })
             .catch(error => console.error('Error:', error))
-
-            //renderOperatorButtons(); 
             App.displayLogoutButton();
             Game.displayUsersGames();
         })
@@ -172,8 +150,6 @@ class User {
         let logOutButton = document.getElementById("logout-button");
         logOutButton.addEventListener("click", function(e){
             window.localStorage.removeItem("userToken");
-            //window.localStorage.removeItem("currentUser");
-            //window.localStorage.removeItem("currentGame");
             container.innerHTML = `
             <div id="first-view">
                 <h3>Practice Equations For Fun!</h3>
@@ -192,8 +168,7 @@ class User {
             qf.removeAttribute("game-id");
             Game.clear;
             User.clear;
-            App.run();
-            
+            App.run();            
         })
     }
         
