@@ -13,17 +13,4 @@ class DivQuestions {
         return divQuestions;
     }
 
-     
-
-    //renderDivQuestion(){
-      //  this.generateDivQuestions();
-        //divQuestion = this.getDivQuestion();
-        //questionBox.innerHTML = `
-        //<form>
-        //${divQuestion.num1} / ${divQuestion.num2} = 
-        //<input type="text" id="answer-input"/>
-        //<button type="submit" name="submit" id="check-button" value="check"/>
-        //</form>`
-    //}
-
 }

@@ -1,5 +1,4 @@
 class Game {
-    //allgames = [];
 
     constructor(id, points, stars, complete, userId){
         this.id = id,
@@ -20,7 +19,6 @@ class Game {
         let gameId = questionForm.getAttribute("game-id");
         return Game.allgames.find(function(game){
             return game.id === parseInt(gameId);
-            //return game.userId === user.id && game.complete === false
         })
     }
 
@@ -31,20 +29,17 @@ class Game {
     static displayGame(){
         //let game = JSON.parse(window.localStorage.currentGame);
         let game = Game.find();
-        //debugger
         if(!!game){
             let points = game.points;
             let stars = game.stars;
             let complete = game.complete;
-            let gameDiv = document.querySelector(".current-game")
-           
+            let gameDiv = document.querySelector(".current-game")           
             let h3 = document.createElement("h3");
             h3.classList.add("current-points");
             h3.innerText = `Points: ${points}`;
             gameDiv.appendChild(h3);
             let table = document.createElement("table")
             gameDiv.appendChild(table)
-            //debugger
             for(let i = 0; i < stars; i++){
                 let tr = document.createElement("tr")
                 let td = document.createElement("td");
@@ -60,7 +55,6 @@ class Game {
 
     static updateCurrentGame(){
         let game = Game.find();
-        //debugger
         let id = game.id;
         let points = game.points;
         points += 1;
@@ -137,7 +131,6 @@ class Game {
 
     static displayUsersGames(){
         let userToken = window.localStorage.getItem('userToken');
-        //debugger
         fetch("http://localhost:3000/users", {
             method: "GET",
             headers: {

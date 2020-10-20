@@ -19,7 +19,6 @@ class App {
             <br>
             <input type="submit" id="log-in-submit" value="Submit">
             </form>`
-            //debugger
             User.submitLogIn();
         })
     }

@@ -54,9 +54,10 @@ class User {
             let passwordInput = document.getElementById("log-in-password").value;
             let logInObject = {
                 method: "POST",
+                
                 headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"                
+                    "Content-Type": "application/json"//,
+                    //"Accept": "application/json"                
                 },
                 body: JSON.stringify({
                     username: nameInput,
@@ -65,8 +66,9 @@ class User {
             };
             e.preventDefault();
             fetch("http://localhost:3000/login", logInObject)
-            .then( response => response.json())
-            .then( function(myjson){
+            .then( response => response.json() )//response.json())
+            .then( (myjson) => {
+                debugger
                 console.log("Success: ", myjson)
                 if(myjson.user){
                     let game = myjson.game.data.attributes;
@@ -93,8 +95,11 @@ class User {
                 }
             })
             .catch( function(error){
-                console.error('Error:', error)
+                debugger
+                console.log('Error:', error)
             })
+            console.log('not in response');
+            
                 App.displayLogoutButton();       
         })
     }
@@ -102,6 +107,7 @@ class User {
     static submitSignUp(){
         let signUpSubmitB = document.getElementById("sign-up-submit");
         if(!!signUpSubmitB){
+            console.log('hit submitSignUp');
         signUpSubmitB.addEventListener("click", function(e){
             let nameInput = document.getElementById("sign-up-name");
             let userName = nameInput.value;
@@ -109,6 +115,7 @@ class User {
             let userPassword = passwordInput.value;
             let configurationObject = {
                 method: "POST",
+                credentials: "include",
                 headers: {
                     "Content-Type": "application/json"
                 },
@@ -118,6 +125,7 @@ class User {
                 })
             }
             //post fetch request
+            console.log('configObj', configurationObject)
             fetch("http://localhost:3000/signup", configurationObject)
             .then((response) => {
                 console.log('Response:', response)

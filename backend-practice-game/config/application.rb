@@ -44,7 +44,8 @@ module BackendPracticeGame
     end
 
     config.action_dispatch.default_headers = {
-    'Access-Control-Allow-Origin' => 'file:///home/learn/projects/p-e-g-app/practice-game/frontend-practice-game/index.html',
+    'Access-Control-Allow-Origin' => '*',
+    #'file:///code/projects/practice-game/frontend-practice-game/index.html',
     'Access-Control-Request-Method' => %w{GET POST OPTIONS}.join(",")
   }
 
