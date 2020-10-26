@@ -22,6 +22,7 @@ class SessionsController < ApplicationController
             #binding.pry
            # render json: {message: "json response"}
             #render "user"
+            #binding.pry
            render json: { user: UserSerializer.new(user), game: GameSerializer.new(incomplete_game), token: token }
         else
             render json: { errors: { message: "Unable to find a user with that name or password"} }, status: 500

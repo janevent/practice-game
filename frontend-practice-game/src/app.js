@@ -8,9 +8,11 @@ class App {
     }
 
     static clickLogIn (){
+        console.log("in log in");
         let container = document.querySelector(".first-view");
         let logInButton = document.getElementById("log-in-1");
         logInButton.addEventListener("click", function(e){
+            console.log("clicked log in");
             console.log(e);
             container.innerHTML = `<form id="log-in-form">Name:<br>
             <input type="text" name="name" id="log-in-name"><br>
@@ -24,9 +26,11 @@ class App {
     }
 
     static clickSignUp(){
+        console.log("in Sign UP");
         let container = document.querySelector(".first-view");
         let signUpButton = document.getElementById("sign-up-1");
         signUpButton.addEventListener("click", function(e){
+            console.log("clicked signup")
             console.log(e);
             container.innerHTML = `<form id="sign-up-form">Name:<br>
             <input type="text" name="name" id="sign-up-name"><br>

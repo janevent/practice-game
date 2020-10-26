@@ -48,8 +48,10 @@ class User {
     }
 
     static submitLogIn(){
+        
         let logInSubmitB = document.getElementById("log-in-submit");
         logInSubmitB.addEventListener("click", function(e){
+            e.preventDefault();
             let nameInput = document.getElementById("log-in-name").value;
             let passwordInput = document.getElementById("log-in-password").value;
             let logInObject = {
@@ -64,11 +66,11 @@ class User {
                     password: passwordInput
                 })
             };
-            e.preventDefault();
+            
             fetch("http://localhost:3000/login", logInObject)
             .then( response => response.json() )//response.json())
             .then( (myjson) => {
-                debugger
+                //debugger
                 console.log("Success: ", myjson)
                 if(myjson.user){
                     let game = myjson.game.data.attributes;
@@ -95,8 +97,8 @@ class User {
                 }
             })
             .catch( function(error){
-                debugger
-                console.log('Error:', error)
+                //debugger
+                console.log('LoginError:', error)
             })
             console.log('not in response');
             
@@ -105,6 +107,7 @@ class User {
     }
 
     static submitSignUp(){
+        console.log("submit sign up");
         let signUpSubmitB = document.getElementById("sign-up-submit");
         if(!!signUpSubmitB){
             console.log('hit submitSignUp');
@@ -115,9 +118,10 @@ class User {
             let userPassword = passwordInput.value;
             let configurationObject = {
                 method: "POST",
-                credentials: "include",
+                
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    Accept: "application/json"
                 },
                 body: JSON.stringify({
                     username: userName,
@@ -125,6 +129,7 @@ class User {
                 })
             }
             //post fetch request
+            console.log("headers", configurationObject.headers);
             console.log('configObj', configurationObject)
             fetch("http://localhost:3000/signup", configurationObject)
             .then((response) => {
@@ -146,7 +151,7 @@ class User {
                 User.displayWhoIsPlaying();
 
             })
-            .catch(error => console.error('Error:', error))
+            .catch(error => console.error('ThisError:', error))
             App.displayLogoutButton();
             Game.displayUsersGames();
         })

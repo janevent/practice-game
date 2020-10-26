@@ -4,7 +4,7 @@ class UsersController < ApplicationController
     def signup 
         #params.inspect
         #binding.pry
-        user = User.new(username: params[:username], password: params[:password])
+        user = User.new(username: user_params[:username], password: user_params[:password])
         if user.save
             game = user.games.build(points: 0, stars: 0, complete: false)
             #binding.pry
@@ -14,8 +14,8 @@ class UsersController < ApplicationController
             options = {
                 include: [:games]
             }
-
-            render json: { user: UserSerializer.new(user, options), token: Auth.create_token({username: user.username, id: user.id}) }
+            #token: Auth.create_token({username: user.username, id: user.id}) 
+            render json: { user: UserSerializer.new(user, options) }
             #render json: { user: {id: user.id, username: user.username }, #incomplete_game: game, token: Auth.create_token({username: #user.username, id: user.id})} 
         else 
             render json: {errors: user.errors.full_messages}, status: 500
@@ -53,7 +53,7 @@ class UsersController < ApplicationController
     end
 
     private 
-   # def user_params    
-    #    params.require(:user).permit(:username, :password)
-    #end
+    def user_params    
+        params.require(:user).permit(:username, :password)
+    end
 end
