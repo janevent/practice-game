@@ -59,6 +59,8 @@ input {
 
 .current-game {
     background-color: lightskyblue;
+    border-radius: 19px;
+    padding: 10px;
     margin: 10px;
     position: absolute;
     top: 100px;
@@ -70,6 +72,8 @@ input {
 .users-games {
     background-color: rgb(241, 127, 114);
     margin: 20px;
+    border-radius: 19px;
+    padding: 10px;
     position: absolute;
     top: 100px;
 
