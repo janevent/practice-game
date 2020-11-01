@@ -42,12 +42,12 @@ module BackendPracticeGame
         resource '*', headers: :any, methods: [:get, :post, :put, :patch, :delete, :options]
       end
     end
-
-    config.action_dispatch.default_headers = {
-    'Access-Control-Allow-Origin' => '*',
+    # for jwt to work
+    #config.action_dispatch.default_headers = {
+    #'Access-Control-Allow-Origin' => '*',
     #'file:///code/projects/practice-game/frontend-practice-game/index.html',
-    'Access-Control-Request-Method' => %w{GET POST OPTIONS}.join(",")
-  }
+    #'Access-Control-Request-Method' => %w{GET POST OPTIONS}.join(",")
+  #}
 
   end
 end

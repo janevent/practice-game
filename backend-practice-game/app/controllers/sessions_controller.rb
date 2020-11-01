@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
         #token = headers["Authorization"]
         if user && user.authenticate(params[:password])
 
-            token = Auth.create_token({username: user.username, id: user.id})
+            #token = Auth.create_token({username: user.username, id: user.id})
             #SAME_SITE=none SECURE
             #binding.pry
             #Game.where(complete: false)
@@ -23,7 +23,8 @@ class SessionsController < ApplicationController
            # render json: {message: "json response"}
             #render "user"
             #binding.pry
-           render json: { user: UserSerializer.new(user), game: GameSerializer.new(incomplete_game), token: token }
+           #render json: { user: UserSerializer.new(user), game: GameSerializer.new(incomplete_game), token: token }
+           render json: { user: UserSerializer.new(user), game: GameSerializer.new(incomplete_game) };
         else
             render json: { errors: { message: "Unable to find a user with that name or password"} }, status: 500
         end

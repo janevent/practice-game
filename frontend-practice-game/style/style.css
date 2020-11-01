@@ -13,7 +13,7 @@ body {
      background-color: LightSkyblue;
      text-align: center;
      margin: 10px;
-     padding: 25px;
+     padding: 20px;
      border-radius: 19px;
      font-family: 'Courier New', Courier, monospace;
 
@@ -28,13 +28,17 @@ body {
     margin: 20px;
     background-color: teal;
     text-align: center;
-    margin: 0 auto;
+    /*margin: 0 auto;*/
     font-family: 'Courier New', Courier, monospace;
 
     position: fixed;
+    padding: 10px;
     top: 80%;
     left: 47%;
-    margin-top: -100px;
+    border-radius: 10px;
+    border: solid;
+    border-color: black;
+    /*margin-top: -100px;*/
     margin-left: -200px;
     
 
