@@ -129,7 +129,8 @@ class User {
                 })
             }
             //post fetch request
-            console.log("headers", configurationObject.headers);
+            //debugger
+            //console.log("headers", configurationObject.headers);
             console.log('configObj', configurationObject)
             fetch("http://localhost:3000/signup", configurationObject)
             .then((response) => {
@@ -138,7 +139,7 @@ class User {
             })
             .then((myjson) => {
                 console.log('Success:', JSON.stringify(myjson))
-                window.localStorage.setItem('userToken', myjson.token)            
+                //window.localStorage.setItem('userToken', myjson.token)            
                 let user = new User(myjson.user.data.attributes.username, myjson.user.data.attributes.id)
 
                 let incompleteGame = new Game(myjson.user.included[0].attributes.id, myjson.user.included[0].attributes.points, myjson.user.included[0].attributes.stars, myjson.user.included[0].attributes.complete, myjson.user.included[0].attributes.user_id);
@@ -149,9 +150,11 @@ class User {
                 Game.displayGame();
                 OperatorButtons.renderOperatorButtons();
                 User.displayWhoIsPlaying();
+                //testing here
+                //Game.displayUsersGames();
 
             })
-            .catch(error => console.error('ThisError:', error))
+            .catch(error => console.log('ThisError:', error))
             App.displayLogoutButton();
             Game.displayUsersGames();
         })

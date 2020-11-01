@@ -130,12 +130,12 @@ class Game {
     }
 
     static displayUsersGames(){
-        let userToken = window.localStorage.getItem('userToken');
+        //let userToken = window.localStorage.getItem('userToken');
         fetch("http://localhost:3000/users", {
             method: "GET",
             headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${userToken}`
+                "Content-Type": "application/json"//,
+                //"Authorization": `Bearer ${userToken}`
             }
         })
         .then(function(response){ return response.json()})

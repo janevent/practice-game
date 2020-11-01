@@ -1,6 +1,7 @@
 body {
-    background-color: LightSkyBlue;
-    font-family: "Arial"
+    background-image: url('jacob-spence-unsplash.jpg');
+    /* LightSkyBlue;*/
+    font-family: "Arial";
 }
  
  .hidden {
