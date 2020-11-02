@@ -21,6 +21,7 @@ class User {
         let token = window.localStorage.userToken;
         let configUser = {
             method: "GET",
+            credentials: "include",
             headers: {
                 "Content-type": "application/json",
                 "Authorization": `Bearer ${token}`
@@ -56,7 +57,7 @@ class User {
             let passwordInput = document.getElementById("log-in-password").value;
             let logInObject = {
                 method: "POST",
-                
+                credentials: "include",
                 headers: {
                     "Content-Type": "application/json"//,
                     //"Accept": "application/json"                
@@ -118,7 +119,7 @@ class User {
             let userPassword = passwordInput.value;
             let configurationObject = {
                 method: "POST",
-                
+                credentials: "include",
                 headers: {
                     "Content-Type": "application/json",
                     Accept: "application/json"
@@ -166,6 +167,7 @@ class User {
         let logOutButton = document.getElementById("logout-button");
         logOutButton.addEventListener("click", function(e){
             window.localStorage.removeItem("userToken");
+            //send logout request to clear sessions
             container.innerHTML = `
             <div id="first-view">
                 <h3>Practice Equations For Fun!</h3>
