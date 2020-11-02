@@ -43,7 +43,12 @@ class App {
         })
     }
 
+    static getCurrentUser(){
+        User.fetchCurrentUser();
+    }
+
     static run(){
+        App.getCurrentUser();
         App.clickLogIn();
         App.clickSignUp();
     }
