@@ -6,6 +6,7 @@ class UsersController < ApplicationController
         #binding.pry
         user = User.new(username: user_params[:username], password: params[:password])
         if user.save
+            session[:user_id] = user.id
             game = user.games.build(points: 0, stars: 0, complete: false)
             #binding.pry
             game.save

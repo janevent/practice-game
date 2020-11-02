@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
         user = User.find_by(username: params[:username])
         #token = headers["Authorization"]
         if user && user.authenticate(params[:password])
-
+            session[:user_id] = user.id
             #token = Auth.create_token({username: user.username, id: user.id})
             #SAME_SITE=none SECURE
             #binding.pry
@@ -31,6 +31,7 @@ class SessionsController < ApplicationController
     end
 
     def logout 
+        session.detroy
         user = User.find_by(username: params[:username])
         if user 
             render json: user 

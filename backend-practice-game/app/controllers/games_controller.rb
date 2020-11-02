@@ -9,9 +9,10 @@ class GamesController < ApplicationController
     end
 
     def new
-        token = request.env["HTTP_AUTHORIZATION"].split(" ").last 
-        if token && Auth.decode_token(token)
-            game = Game.create(id: params[:id], points: params[:points], stars: params[:stars], complete: params[:complete], user_id: params[:user_id])
+        #token = request.env["HTTP_AUTHORIZATION"].split(" ").last 
+       # if token && Auth.decode_token(token)
+        if logged_in?
+            game = Game.create(id: params[:id], points: params[:points], stars: params[:stars], complete: params[:complete], user_id: current_user.id)
             render json: GameSerializer.new(game)
         else
             render json: { errors: {message: "Can not find game"}} 
@@ -36,9 +37,10 @@ class GamesController < ApplicationController
     def update 
         #binding.pry
         #token  = headers userToken 
-        token = request.env["HTTP_AUTHORIZATION"].split(" ").last
+        #token = request.env["HTTP_AUTHORIZATION"].split(" ").last
         #binding.pry
-        if token && Auth.decode_token(token)
+        #if token && Auth.decode_token(token)
+        if logged_in?
             game = Game.find_by(id: params[:id]);
             game.update(points: params[:points], stars: params[:stars], complete: params[:complete])
             render json: GameSerializer.new(game)
