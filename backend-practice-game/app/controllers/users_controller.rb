@@ -23,6 +23,16 @@ class UsersController < ApplicationController
         end
     end
 
+    def current_user
+        binding.pry
+        if logged_in?
+            #user = current_user
+            render json: {user: current_user} 
+        else 
+            render json: {message: "no one logged in"}
+        end
+    end
+
     def show 
         token = request.env["HTTP_AUTHORIZATION"].split(" ").last
         if token && Auth.decode_token(token)

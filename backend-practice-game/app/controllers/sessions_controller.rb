@@ -31,7 +31,7 @@ class SessionsController < ApplicationController
     end
 
     def logout 
-        session.detroy
+        session[:user_id].clear
         user = User.find_by(username: params[:username])
         if user 
             render json: user 

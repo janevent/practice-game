@@ -189,6 +189,22 @@ class User {
             App.run();            
         })
     }
+
+    static fetchCurrentUser(){
+        fetch('http://localhost:3000/users/current_user', {
+            method: "GET",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json"
+            }
+        })
+        .then(response => response.json())
+        .then(myjson => {
+            console.log(myjson)
+        })
+        .catch(error => console.error(error))
+    }
         
 
 }
