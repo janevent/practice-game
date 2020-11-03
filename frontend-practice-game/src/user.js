@@ -179,10 +179,13 @@ class User {
             </div>
             `
             document.querySelector(".current-game").innerHTML = " ";
+            //document.querySelector(".current-game").classList.add("hidden")
             document.querySelector(".users-games").innerHTML = " ";
+            //document.querySelector(".users-games").classList.add("hidden")
             logOutButton.classList.add("hidden");
             let qf = document.querySelector(".question-form")
             qf.innerHTML = " ";
+            //qf.classList.add("hidden")
             qf.removeAttribute("game-id");
             Game.clear;
             User.clear;

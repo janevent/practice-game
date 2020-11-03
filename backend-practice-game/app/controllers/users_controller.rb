@@ -23,8 +23,8 @@ class UsersController < ApplicationController
         end
     end
 
-    def current_user
-        binding.pry
+    def get_current_user
+        #binding.pry
         if logged_in?
             #user = current_user
             render json: {user: current_user} 
