@@ -15,8 +15,8 @@ class Question{
     }
 
     renderQues(){
-        let qf = document.querySelector(".question-form");
-        qf.innerHTML = `
+        //let qf = document.querySelector(".question-form");
+        Select.questionForm().innerHTML = `
         <br>
         <form id="question-form">${this.firstNum} ${this.operator} ${this.secondNum} = <input type="text" name="answer" id="user-answer"><input type="submit" id="check-answer" value="check"></form>
         `

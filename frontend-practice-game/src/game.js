@@ -15,8 +15,8 @@ class Game {
 
     static find(){
         //let user = JSON.parse(window.localStorage.currentUser);
-        let questionForm = document.querySelector(".question-form");
-        let gameId = questionForm.getAttribute("game-id");
+        //let questionForm = document.querySelector(".question-form");
+        let gameId = Select.questionForm().getAttribute("game-id");
         return Game.allgames.find(function(game){
             return game.id === parseInt(gameId);
         })
@@ -92,8 +92,8 @@ class Game {
         .then((myJson) => console.log("Success:", myJson))
         .catch((error) => console.error("Error:", error))
             
-        let gameDiv = document.querySelector(".current-game");
-        gameDiv.innerHTML = `
+        //let gameDiv = document.querySelector(".current-game");
+        Select.currentGame().innerHTML = `
             <h3>Points: ${points}</h3>
             <table class="current-game-table"></table>                 
         `
@@ -119,12 +119,12 @@ class Game {
                     <br>
                 `
     
-                let questionForm = document.querySelector(".question-form");
-                questionForm.classList.add("hidden");
-                let ug = document.querySelector(".users-games");
-                ug.classList.add("hidden");
-                let cg = document.querySelector(".current-game");
-                cg.classList.add("hidden");
+                //let questionForm = document.querySelector(".question-form");
+                Select.questionForm().classList.add("hidden");
+                //let ug = document.querySelector(".users-games");
+                Select.userGames().classList.add("hidden");
+                //let cg = document.querySelector(".current-game");
+                Select.currentGame().classList.add("hidden");
             }
         }
     }
