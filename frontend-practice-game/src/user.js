@@ -205,6 +205,8 @@ class User {
         .then(response => response.json())
         .then(myjson => {
             console.log(myjson)
+            //if(mjson.message === "not Logged In")
+            //select elements and add hidden class
         })
         .catch(error => console.error(error))
     }
