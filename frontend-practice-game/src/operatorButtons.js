@@ -53,15 +53,12 @@ class OperatorButtons{
 
     static renderOperatorButtons(){
         let container = document.querySelector(".first-view");
-        container.innerHTML =   `
-            <h2 class="put-name-here"></h2>
-            <br>   
+        container.innerHTML =   `   
             <br>
             <button type="button" id="plus-operator-button"><i class="fas fa-plus"></i></button>
             <button type="button" id="minus-operator-button"><i class="fas fa-minus"></i></button>
             <button type="button" id="times-operator-button"><i class="fas fa-times"></i></button>
             <button type="button" id="divide-operator-button"><i class="fas fa-divide"></i></button>
-            <br>
             <br>
             <br>
         `;
