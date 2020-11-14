@@ -1,4 +1,4 @@
-class Select{
+class Select {
     //questionForm = document.querySelector(".question-form");
     //currentGame = document.querySelector(".current-game");
     //userGames = document.querySelector(".user-games");
