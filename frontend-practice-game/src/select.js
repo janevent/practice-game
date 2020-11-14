@@ -11,8 +11,8 @@ class Select {
         return document.querySelector(".current-game");
     }
 
-    static userGames = () => {
-        return document.querySelector(".user-games");
+    static usersGames = () => {
+        return document.querySelector(".users-games");
     }
 } 
 

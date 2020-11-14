@@ -207,6 +207,11 @@ class User {
             console.log(myjson)
             //if(mjson.message === "not Logged In")
             //select elements and add hidden class
+            if(myjson.message === "no one logged in"){
+                Select.currentGame().classList.add("hidden");
+                Select.questionForm().classList.add("hidden");
+                Select.usersGames().classList.add("hidden");
+            }
         })
         .catch(error => console.error(error))
     }
