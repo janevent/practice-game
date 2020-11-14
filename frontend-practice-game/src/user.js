@@ -86,8 +86,13 @@ class User {
                     let username = user.username;
                     let nu = new User(username, userId)
                     window.localStorage.setItem("userToken", myjson.token)
-                    let questionForm = document.querySelector(".question-form");
+                    //let questionForm = document.querySelector(".question-form");
+                    let questionForm = Select.questionForm();
                     questionForm.setAttribute("game-id", gameId);
+                    questionForm.classList.remove("hidden");
+                    //potentially need to check if they exist first..
+                    Select.currentGame().classList.remove("hidden");
+                    Select.usersGames().classList.remove("hidden");
                     Game.displayGame();
                     Game.displayUsersGames();
                     OperatorButtons.renderOperatorButtons();
